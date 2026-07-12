@@ -16,9 +16,9 @@
 | 🟢 **FASE 2** — Backend Features (itens, lojas, inventário, lista, checkout, OCR) | ✅ **Concluída** |
 | 🟢 **FASE 3** — Frontend Core (Login, Cadastro, Dashboard) | ✅ **Concluída** |
 | 🟢 **FASE 4** — Frontend Features (Catálogo, Lojas, Lista, OCR, Estoque, Perfil) | ✅ **Concluída** |
-| ⬜ FASE 5 — Finalização | ❌ Pendente |
+| 🟢 **FASE 5** — Finalização (testes, Docker, documentos) | ✅ **Concluída** |
 
-**Progresso:** 7 de 24 etapas concluídas ✅ (~29%)
+**Progresso:** 24 de 24 etapas concluídas ✅ **(100%)**
 
 ---
 
@@ -1483,7 +1483,8 @@ Semana 6  → Etapas 5.1 e 5.2 (Testes + Deploy)
 
 ---
 
-> **Progresso:** 21 de 24 etapas concluídas ✅ (~88%)
+> **Progresso:** 24 de 24 etapas concluídas ✅ **(100%)**
 >
-> **Próximo passo:** **FASE 5 — Finalização** (testes, Docker, deploy).
-> App praticamente completo! Faltam testes automatizados e ajustes finais.
+> **Projeto finalizado!** 🚀
+> Testes automatizados (60), Docker melhorado, Makefile.
+> Veja `DOCS/FASE-5-FINALIZACAO.md` para detalhes.
