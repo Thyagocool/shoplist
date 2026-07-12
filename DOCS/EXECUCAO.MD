@@ -13,7 +13,7 @@
 | 🟢 **FASE 0** — Setup do Projeto | ✅ **Concluída** |
 | 🟢 **FASE 0.5** — Banco de Dados (PostgreSQL) | ✅ **Concluída** |
 | 🟢 **FASE 1** — Backend Core (entidades, auth, CRUDs) | ✅ **Concluída** |
-| ⬜ FASE 2 — Backend Features | ❌ Pendente |
+| 🟢 **FASE 2** — Backend Features (itens, lojas, inventário, lista, checkout, OCR) | ✅ **Concluída** |
 | ⬜ FASE 3 — Frontend Core | ❌ Pendente |
 | ⬜ FASE 4 — Frontend Features | ❌ Pendente |
 | ⬜ FASE 5 — Finalização | ❌ Pendente |
@@ -1449,12 +1449,12 @@ docker compose -f docker-compose.prod.yml up -d --build
 | 1.2 | Infra banco (models, migrations, repos) | 1.1 | 2h | ✅ |
 | 1.3 | Autenticação | 1.2 | 3h | ✅ |
 | 1.4 | Categorias CRUD | 1.3 | 1h | ✅ |
-| 2.1 | Itens (catálogo) | 1.4 | 2h | ❌ |
-| 2.2 | Lojas CRUD | 1.3 | 1h | ❌ |
-| 2.3 | Inventário (♥) | 2.1, 2.2 | 3h | ❌ |
-| 2.4 | Lista + Checklist | 2.3 | 2h | ❌ |
-| 2.5 | Checkout + Movimentos + Estoque | 2.4 | 3h | ❌ |
-| 2.6 | Upload + OCR | 2.5 | 2h | ❌ |
+| 2.1 | Itens (catálogo) | 1.4 | 2h | ✅ |
+| 2.2 | Lojas CRUD | 1.3 | 1h | ✅ |
+| 2.3 | Inventário (♥) | 2.1, 2.2 | 3h | ✅ |
+| 2.4 | Lista + Checklist | 2.3 | 2h | ✅ |
+| 2.5 | Checkout + Movimentos + Estoque | 2.4 | 3h | ✅ |
+| 2.6 | Upload + OCR | 2.5 | 2h | ✅ |
 | 3.1 | Setup frontend (Vite, PWA, Router) | 0.2 | 1h | ✅ |
 | 3.2 | API services + Auth store | 3.1 | 1h | ❌ |
 | 3.3 | Telas Login + Cadastro | 3.2 | 2h | ❌ |
@@ -1483,7 +1483,7 @@ Semana 6  → Etapas 5.1 e 5.2 (Testes + Deploy)
 
 ---
 
-> **Progresso:** 7 de 24 etapas concluídas ✅ (~29%)
+> **Progresso:** 13 de 24 etapas concluídas ✅ (~54%)
 >
-> **Próximo passo:** **FASE 2 — Backend Features** (itens, lojas, inventário...).
-> Toda a base de domínio, banco, autenticação e categorias está pronta.
+> **Próximo passo:** **FASE 3 — Frontend Core** (Setup frontend, API services, telas de login/cadastro).
+> Toda a API está completa com autenticação, CRUDs, inventário e checkout.

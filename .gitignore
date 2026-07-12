@@ -23,6 +23,9 @@ api/uploads/*
 node_modules/
 app/dist/
 app/.vite/
+*.tsbuildinfo
+app/vite.config.d.ts
+app/vite.config.js
 
 # IDE
 .vscode/
