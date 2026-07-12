@@ -3,6 +3,7 @@ import { useAuthStore } from '../../store/authStore';
 
 const navItems = [
   { path: '/', label: 'Início', icon: '🏠' },
+  { path: '/categories', label: 'Categorias', icon: '🏷️' },
   { path: '/items', label: 'Itens', icon: '📦' },
   { path: '/stores', label: 'Lojas', icon: '🏪' },
   { path: '/lists', label: 'Listas', icon: '📋' },

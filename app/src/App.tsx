@@ -6,6 +6,7 @@ import ProtectedRoute from './components/layout/ProtectedRoute';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import CategoriesList from './pages/CategoriesList';
 import ItemsList from './pages/ItemsList';
 import ItemsForm from './pages/ItemsForm';
 import StoresList from './pages/StoresList';
@@ -45,6 +46,7 @@ export default function App() {
         <Route element={<ProtectedRoute />}>
           <Route element={<Layout />}>
             <Route path="/" element={<Dashboard />} />
+            <Route path="/categories" element={<CategoriesList />} />
             <Route path="/items" element={<ItemsList />} />
             <Route path="/items/new" element={<ItemsForm />} />
             <Route path="/items/:id/edit" element={<ItemsForm />} />
