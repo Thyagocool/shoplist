@@ -548,6 +548,22 @@ export default function ListDetail() {
         })()
       )}
 
+      {/* Total */}
+      {list.items.length > 0 && (() => {
+        const total = list.items.reduce((acc, i) => acc + (i.price_cents || 0), 0);
+        const filled = list.items.filter(i => i.price_cents).length;
+        return (
+          <div className="bg-white rounded-xl shadow-sm border p-4 flex items-center justify-between">
+            <span className="text-sm text-gray-500">
+              {filled} de {list.items.length} itens com preço
+            </span>
+            <span className="text-lg font-bold text-primary-700">
+              R$ {(total / 100).toFixed(2)}
+            </span>
+          </div>
+        );
+      })()}
+
       {/* Checkout button */}
       {isEditable && list.items.length > 0 && (
         <Button onClick={handleCheckout}>
