@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+.venv/
+venv/
+*.db
+*.sqlite3
+
+# Env
+.env
+.env.local
+.env.prod
+
+# Uploads
+api/uploads/*
+!api/uploads/.gitkeep
+
+# Node
+node_modules/
+app/dist/
+app/.vite/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+data/
