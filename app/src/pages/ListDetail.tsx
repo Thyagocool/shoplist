@@ -20,6 +20,7 @@ export default function ListDetail() {
   const [saving, setSaving] = useState(false);
   const [addingAll, setAddingAll] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [unitOpen, setUnitOpen] = useState<string | null>(null);
 
   const load = async () => {
     if (!id) return;
@@ -338,18 +339,39 @@ export default function ListDetail() {
                         step="0.01"
                         min="0.01"
                       />
-                      <select
-                        className="border rounded px-1 py-0.5 text-sm"
-                        defaultValue={item.unit}
-                        onChange={async (e) => {
-                          await listsAPI.updateItem(item.id, { unit: e.target.value });
-                          load();
-                        }}
-                      >
-                        {['un', 'kg', 'g', 'l', 'ml', 'pct', 'cx', 'dz'].map((u) => (
-                          <option key={u} value={u}>{u}</option>
-                        ))}
-                      </select>
+                      <div className="relative">
+                        <button
+                          type="button"
+                          className="border rounded px-1.5 py-0.5 text-sm min-w-[3rem] bg-white hover:bg-gray-50"
+                          onClick={() => setUnitOpen(unitOpen === item.id ? null : item.id)}
+                          onBlur={() => setUnitOpen(null)}
+                        >
+                          {item.unit}
+                        </button>
+                        {unitOpen === item.id && (
+                          <div className="absolute top-full left-0 mt-0.5 bg-white border rounded-lg shadow-lg z-50 min-w-[5rem]">
+                            {['un', 'kg', 'g', 'l', 'ml', 'pct', 'cx', 'dz'].map((u) => (
+                              <button
+                                key={u}
+                                type="button"
+                                className={`block w-full text-left px-3 py-1.5 text-sm hover:bg-gray-100 ${
+                                  u === item.unit ? 'font-bold bg-primary-50 text-primary-700' : ''
+                                }`}
+                                onMouseDown={async (e) => {
+                                  e.preventDefault();
+                                  setUnitOpen(null);
+                                  if (u !== item.unit) {
+                                    await listsAPI.updateItem(item.id, { unit: u });
+                                    load();
+                                  }
+                                }}
+                              >
+                                {u}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                       <input
                         type="number"
                         className="w-20 border rounded px-2 py-0.5 text-sm text-right"
