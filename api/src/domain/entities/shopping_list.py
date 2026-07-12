@@ -21,7 +21,7 @@ class ShoppingList:
     completed_at: datetime | None = None
 
     @classmethod
-    def create(cls, name: str, user_id: UUID) -> "ShoppingList":
+    def create(cls, name: str, user_id: UUID, store_id: UUID | None = None) -> "ShoppingList":
         return cls(
             id=uuid4(),
             name=name,

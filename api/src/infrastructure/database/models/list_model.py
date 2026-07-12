@@ -4,10 +4,10 @@ from sqlalchemy import DateTime, ForeignKey, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from src.infrastructure.database.models.base import Base, UUIDMixin
+from src.infrastructure.database.models.base import Base, TimestampMixin, UUIDMixin
 
 
-class ShoppingListModel(UUIDMixin, Base):
+class ShoppingListModel(UUIDMixin, TimestampMixin, Base):
     __tablename__ = "shopping_lists"
 
     name: Mapped[str] = mapped_column(String(120), nullable=False)

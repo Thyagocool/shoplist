@@ -27,16 +27,18 @@ class ShoppingListItem:
     def from_pre_registered(
         cls,
         shopping_list_id: UUID,
-        item: "PreRegisteredItem",  # type: ignore  # noqa: F821
-        user_id: UUID,
+        pre_registered_item_id: UUID,
+        estimated_quantity: Decimal = Decimal("1"),
+        unit: Unit = Unit.UN,
+        user_id: UUID | None = None,
     ) -> "ShoppingListItem":
         """Create a list item from a pre-registered catalog item."""
         return cls(
             id=uuid4(),
             shopping_list_id=shopping_list_id,
-            pre_registered_item_id=item.id,
-            estimated_quantity=item.default_quantity,
-            unit=item.default_unit,
+            pre_registered_item_id=pre_registered_item_id,
+            estimated_quantity=estimated_quantity,
+            unit=unit,
             user_id=user_id,
             created_at=datetime.now(),
         )

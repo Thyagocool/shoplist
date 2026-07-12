@@ -12,6 +12,14 @@ class ItemRepository(BaseRepository[ItemModel]):
     def __init__(self, session: AsyncSession) -> None:
         super().__init__(session, ItemModel)
 
+    async def find_by_id(self, id: UUID) -> ItemModel | None:
+        result = await self.session.execute(
+            select(ItemModel)
+            .where(ItemModel.id == id)
+            .options(joinedload(ItemModel.category))
+        )
+        return result.scalar_one_or_none()
+
     async def find_active_by_user_id(self, user_id: UUID) -> list[ItemModel]:
         result = await self.session.execute(
             select(ItemModel)
@@ -25,6 +33,7 @@ class ItemRepository(BaseRepository[ItemModel]):
         result = await self.session.execute(
             select(ItemModel)
             .where(ItemModel.category_id == category_id, ItemModel.user_id == user_id)
+            .options(joinedload(ItemModel.category))
             .order_by(ItemModel.name)
         )
         return list(result.scalars().all())

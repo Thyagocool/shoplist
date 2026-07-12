@@ -9,6 +9,11 @@ from src.infrastructure.database.config import engine
 from src.presentation.api.errors.handlers import register_error_handlers
 from src.presentation.api.routers.auth_router import router as auth_router
 from src.presentation.api.routers.category_router import router as category_router
+from src.presentation.api.routers.item_router import router as item_router
+from src.presentation.api.routers.store_router import router as store_router
+from src.presentation.api.routers.inventory_router import router as inventory_router
+from src.presentation.api.routers.ocr_router import router as ocr_router
+from src.presentation.api.routers.shopping_list_router import router as shopping_list_router
 
 
 @asynccontextmanager
@@ -53,6 +58,11 @@ def create_app() -> FastAPI:
     # Routers
     app.include_router(auth_router)
     app.include_router(category_router)
+    app.include_router(item_router)
+    app.include_router(store_router)
+    app.include_router(inventory_router)
+    app.include_router(ocr_router)
+    app.include_router(shopping_list_router)
 
     return app
 
