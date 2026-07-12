@@ -119,7 +119,25 @@ async def list_lists(
 
     lists = await use_case.execute(user_id)
     return [
-        ShoppingListResponse(id=l.id, name=l.name, status=l.status, completed_at=l.completed_at)
+        ShoppingListResponse(
+            id=l.id,
+            name=l.name,
+            status=l.status,
+            completed_at=l.completed_at,
+            items=[
+                ListItemResponse(
+                    id=i.id,
+                    pre_registered_item_id=i.pre_registered_item_id,
+                    custom_name=i.custom_name,
+                    item_name=i.item_name,
+                    estimated_quantity=i.estimated_quantity,
+                    unit=i.unit,
+                    checked=i.checked,
+                    price_cents=i.price_cents,
+                )
+                for i in l.items
+            ],
+        )
         for l in lists
     ]
 

@@ -74,6 +74,17 @@ export default function Lists() {
                     <p className="text-xs text-gray-400 mt-1">
                       {list.items?.length || 0} itens ·{' '}
                       {list.items?.filter((i) => i.checked).length || 0} marcados
+                      {list.items?.some((i) => i.price_cents) && (
+                        <>
+                          {' · '}
+                          <span className="text-primary-600 font-medium">
+                            R$ {(
+                              (list.items?.reduce((acc, i) => acc + (i.price_cents || 0), 0) || 0) /
+                              100
+                            ).toFixed(2)}
+                          </span>
+                        </>
+                      )}
                     </p>
                     <div className="flex gap-2 mt-2">
                       <button
