@@ -1,7 +1,9 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 
+const API_BASE = import.meta.env.VITE_API_URL || '/api/v1';
+
 const api = axios.create({
-  baseURL: '/api/v1',
+  baseURL: API_BASE,
   headers: { 'Content-Type': 'application/json' },
 });
 
@@ -63,7 +65,7 @@ api.interceptors.response.use(
       }
 
       try {
-        const { data } = await axios.post('/api/v1/auth/refresh', {
+        const { data } = await axios.post(`${API_BASE}/auth/refresh`, {
           refresh_token: refreshToken,
         });
         const newToken = data.access_token;
@@ -155,7 +157,7 @@ export const listsAPI = {
     api.patch(`/lists/items/${itemId}/toggle`),
   complete: (id: string) => api.post(`/lists/${id}/complete`),
   cancel: (id: string) => api.post(`/lists/${id}/cancel`),
-  updateItem: (itemId: string, data: { unit?: string; estimated_quantity?: number }) =>
+  updateItem: (itemId: string, data: { unit?: string; estimated_quantity?: number; price_cents?: number }) =>
     api.patch(`/lists/items/${itemId}`, data),
   removeItem: (itemId: string) => api.delete(`/lists/items/${itemId}`),
   checkout: (

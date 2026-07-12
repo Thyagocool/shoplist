@@ -19,6 +19,7 @@ export default function ListDetail() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [addingAll, setAddingAll] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const load = async () => {
     if (!id) return;
@@ -178,6 +179,25 @@ export default function ListDetail() {
         </div>
       </div>
 
+      {/* Search */}
+      <div className="relative">
+        <input
+          type="text"
+          placeholder="🔍 Buscar item na lista..."
+          className="w-full border rounded-xl px-4 py-2.5 text-sm bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        {searchTerm && (
+          <button
+            onClick={() => setSearchTerm('')}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+          >
+            ✕
+          </button>
+        )}
+      </div>
+
       {/* Add item form */}
       {showAdd && (
         <div className="bg-white rounded-xl shadow-sm p-4 space-y-3">
@@ -238,15 +258,32 @@ export default function ListDetail() {
         <p className="text-gray-400 text-center py-8">Nenhum item na lista</p>
       ) : (
         (() => {
+          // Filter items by search term
+          const filteredItems = searchTerm
+            ? list.items.filter((li) =>
+                (li.item_name || li.custom_name || '')
+                  .toLowerCase()
+                  .includes(searchTerm.toLowerCase())
+              )
+            : list.items;
+
+          if (filteredItems.length === 0) {
+            return (
+              <p className="text-gray-400 text-center py-8">
+                Nenhum item corresponde a "{searchTerm}"
+              </p>
+            );
+          }
+
           // Build a map: item.id → category_id
           const itemCatMap = new Map<string, string>();
           catalogItems.forEach((ci) => itemCatMap.set(ci.id, ci.category_id));
 
           // Build groups: category_id → items[]
-          const groups = new Map<string, typeof list.items>();
-          const uncategorized: typeof list.items = [];
+          const groups = new Map<string, typeof filteredItems>();
+          const uncategorized: typeof filteredItems = [];
 
-          list.items.forEach((li) => {
+          filteredItems.forEach((li) => {
             const catId = li.pre_registered_item_id
               ? itemCatMap.get(li.pre_registered_item_id) || ''
               : '';
@@ -285,37 +322,56 @@ export default function ListDetail() {
                   {item.item_name || item.custom_name}
                 </p>
                 <p className="text-sm text-gray-500">
-                  {item.estimated_quantity} {item.unit}
+                  {isEditable ? (
+                    <span className="flex items-center gap-1">
+                      <input
+                        type="number"
+                        className="w-14 border rounded px-1 py-0.5 text-sm text-center"
+                        value={item.estimated_quantity}
+                        onChange={async (e) => {
+                          const val = parseFloat(e.target.value);
+                          if (!isNaN(val) && val > 0) {
+                            await listsAPI.updateItem(item.id, { estimated_quantity: val });
+                            load();
+                          }
+                        }}
+                        step="0.01"
+                        min="0.01"
+                      />
+                      <select
+                        className="border rounded px-1 py-0.5 text-sm"
+                        value={item.unit}
+                        onChange={async (e) => {
+                          await listsAPI.updateItem(item.id, { unit: e.target.value });
+                          load();
+                        }}
+                      >
+                        {['un', 'kg', 'g', 'l', 'ml', 'pct', 'cx', 'dz'].map((u) => (
+                          <option key={u} value={u}>{u}</option>
+                        ))}
+                      </select>
+                    </span>
+                  ) : (
+                    <>{item.estimated_quantity} {item.unit}</>
+                  )}
                   {item.price_cents ? ` · R$ ${(item.price_cents / 100).toFixed(2)}` : ''}
                 </p>
               </div>
               <div className="flex items-center gap-1">
                 {isEditable && (
                   <>
-                    {/* Quantidade editável */}
-                    <input
-                      type="number"
-                      className="w-16 border rounded px-1 py-1 text-sm text-center"
-                      value={item.estimated_quantity}
-                      onChange={async (e) => {
-                        const val = parseFloat(e.target.value);
-                        if (!isNaN(val) && val > 0) {
-                          await listsAPI.updateItem(item.id, { estimated_quantity: val });
-                          load();
-                        }
-                      }}
-                      step="0.01"
-                      min="0.01"
-                    />
-
                     {/* Preço */}
                     <input
                       type="number"
                       className="w-20 border rounded px-2 py-1 text-sm text-right"
                       placeholder="Preço"
                       value={item.price_cents ? (item.price_cents / 100).toFixed(2) : ''}
-                      onChange={() => {}}
-                      onBlur={() => load()}
+                      onChange={async (e) => {
+                        const val = parseFloat(e.target.value);
+                        const priceCents = isNaN(val) ? 0 : Math.round(val * 100);
+                        await listsAPI.updateItem(item.id, { price_cents: priceCents });
+                        load();
+                      }}
                       step="0.01"
                       min="0"
                     />
