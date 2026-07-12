@@ -14,7 +14,9 @@ from src.application.use_cases.shopping_list.complete_list import CompleteShoppi
 from src.application.use_cases.shopping_list.create_list import CreateShoppingListUseCase
 from src.application.use_cases.shopping_list.get_list import GetShoppingListUseCase
 from src.application.use_cases.shopping_list.list_lists import ListShoppingListsUseCase
+from src.application.use_cases.shopping_list.remove_list_item import RemoveListItemUseCase
 from src.application.use_cases.shopping_list.toggle_item import ToggleListItemUseCase
+from src.application.use_cases.shopping_list.update_list_item import UpdateListItemUseCase
 from src.infrastructure.database.config import get_session
 from src.infrastructure.database.repositories.list_repository import ShoppingListRepository
 from src.infrastructure.database.repositories.movement_repository import MovementRepository
@@ -26,6 +28,7 @@ from src.presentation.schemas.shopping_list_schemas import (
     CreateShoppingListRequest,
     ListItemResponse,
     ShoppingListResponse,
+    UpdateListItemRequest,
 )
 
 router = APIRouter(prefix="/api/v1/lists", tags=["shopping lists"])
@@ -229,6 +232,63 @@ async def toggle_item(
         price_cents=result.price_cents,
         item_name=result.item_name,
     )
+
+
+@router.patch("/items/{item_id}", response_model=ListItemResponse)
+async def update_list_item(
+    item_id: UUID,
+    body: UpdateListItemRequest,
+    user_id: UUID = Depends(get_current_user_id),
+    session=Depends(get_session),
+) -> ListItemResponse:
+    repo = ShoppingListRepository(session)
+    uow = SQLAlchemyUnitOfWork(session)
+    use_case = UpdateListItemUseCase(repo, uow)
+
+    try:
+        result = await use_case.execute(
+            item_id=item_id,
+            user_id=user_id,
+            unit=body.unit,
+            estimated_quantity=body.estimated_quantity,
+        )
+    except ValueError as e:
+        from fastapi import HTTPException
+
+        raise HTTPException(status_code=400, detail=str(e))
+
+    if result is None:
+        from fastapi import HTTPException
+
+        raise HTTPException(status_code=404, detail="Item not found")
+
+    return ListItemResponse(
+        id=result.id,
+        pre_registered_item_id=result.pre_registered_item_id,
+        custom_name=result.custom_name,
+        item_name=result.item_name,
+        estimated_quantity=result.estimated_quantity,
+        unit=result.unit,
+        checked=result.checked,
+        price_cents=result.price_cents,
+    )
+
+
+@router.delete("/items/{item_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def remove_list_item(
+    item_id: UUID,
+    user_id: UUID = Depends(get_current_user_id),
+    session=Depends(get_session),
+) -> None:
+    repo = ShoppingListRepository(session)
+    uow = SQLAlchemyUnitOfWork(session)
+    use_case = RemoveListItemUseCase(repo, uow)
+
+    success = await use_case.execute(item_id, user_id)
+    if not success:
+        from fastapi import HTTPException
+
+        raise HTTPException(status_code=404, detail="Item not found")
 
 
 @router.post("/{list_id}/complete", response_model=ShoppingListResponse)

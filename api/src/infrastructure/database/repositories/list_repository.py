@@ -42,3 +42,17 @@ class ShoppingListRepository(BaseRepository[ShoppingListModel]):
             .limit(1)
         )
         return result.scalar_one_or_none()
+
+    async def delete_item(self, item_id: UUID) -> bool:
+        """Remove um item da lista de compras."""
+        from src.infrastructure.database.models.list_item_model import ShoppingListItemModel
+
+        result = await self.session.execute(
+            select(ShoppingListItemModel).where(ShoppingListItemModel.id == item_id)
+        )
+        model = result.scalar_one_or_none()
+        if not model:
+            return False
+        await self.session.delete(model)
+        await self.session.flush()
+        return True

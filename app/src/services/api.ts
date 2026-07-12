@@ -155,6 +155,9 @@ export const listsAPI = {
     api.patch(`/lists/items/${itemId}/toggle`),
   complete: (id: string) => api.post(`/lists/${id}/complete`),
   cancel: (id: string) => api.post(`/lists/${id}/cancel`),
+  updateItem: (itemId: string, data: { unit?: string; estimated_quantity?: number }) =>
+    api.patch(`/lists/items/${itemId}`, data),
+  removeItem: (itemId: string) => api.delete(`/lists/items/${itemId}`),
   checkout: (
     id: string,
     data: { items: Array<{ shopping_list_item_id: string; price_cents: number }> }

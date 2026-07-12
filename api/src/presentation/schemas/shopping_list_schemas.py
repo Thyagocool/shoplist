@@ -18,6 +18,11 @@ class AddListItemRequest(BaseModel):
     store_id: UUID | None = None
 
 
+class UpdateListItemRequest(BaseModel):
+    unit: str | None = None
+    estimated_quantity: Decimal | None = None
+
+
 class ListItemResponse(BaseModel):
     id: UUID
     pre_registered_item_id: UUID | None = None

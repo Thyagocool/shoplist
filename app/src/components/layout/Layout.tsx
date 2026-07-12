@@ -25,9 +25,9 @@ export default function Layout() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      {/* Header */}
-      <header className="bg-green-700 text-white shadow-md">
+    <div className="h-screen bg-gray-50 flex flex-col">
+      {/* Header — fixo no topo */}
+      <header className="bg-green-700 text-white shadow-md flex-shrink-0">
         <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
           <h1
             className="text-xl font-bold cursor-pointer"
@@ -54,13 +54,13 @@ export default function Layout() {
         </div>
       </header>
 
-      {/* Main */}
-      <main className="flex-1 max-w-4xl mx-auto px-4 py-6 w-full">
+      {/* Main — scrolla, ocupa o espaço restante */}
+      <main className="flex-1 overflow-y-auto max-w-4xl mx-auto px-4 py-6 w-full min-h-0">
         <Outlet />
       </main>
 
-      {/* Bottom Navigation */}
-      <nav className="bg-white border-t shadow-lg">
+      {/* Bottom Navigation — fixo embaixo */}
+      <nav className="bg-white border-t shadow-lg flex-shrink-0">
         <div className="max-w-4xl mx-auto px-2 py-1 flex overflow-x-auto gap-1">
           {navItems.map((item) => {
             const isActive = location.pathname === item.path ||

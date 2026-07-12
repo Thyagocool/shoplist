@@ -8,7 +8,6 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import CategoriesList from './pages/CategoriesList';
 import ItemsList from './pages/ItemsList';
-import ItemsForm from './pages/ItemsForm';
 import StoresList from './pages/StoresList';
 import Lists from './pages/Lists';
 import ListForm from './pages/ListForm';
@@ -48,8 +47,6 @@ export default function App() {
             <Route path="/" element={<Dashboard />} />
             <Route path="/categories" element={<CategoriesList />} />
             <Route path="/items" element={<ItemsList />} />
-            <Route path="/items/new" element={<ItemsForm />} />
-            <Route path="/items/:id/edit" element={<ItemsForm />} />
             <Route path="/stores" element={<StoresList />} />
             <Route path="/lists" element={<Lists />} />
             <Route path="/lists/new" element={<ListForm />} />

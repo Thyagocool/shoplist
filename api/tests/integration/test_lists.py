@@ -109,6 +109,41 @@ class TestListItemFlow:
         assert data["movements"][0]["sequential_code"].startswith("MOV-")
 
 
+class TestRemoveItem:
+    async def test_remove_item_from_list(self, client, auth_header, item_id):
+        # Create list
+        lst = await client.post(
+            "/api/v1/lists", json={"name": "Lista Remover"}, headers=auth_header
+        )
+        list_id = lst.json()["id"]
+
+        # Add item
+        add_resp = await client.post(
+            f"/api/v1/lists/{list_id}/items",
+            json={"pre_registered_item_id": item_id, "estimated_quantity": "1"},
+            headers=auth_header,
+        )
+        assert add_resp.status_code == 201
+        item_list_id = add_resp.json()["id"]
+
+        # Remove item
+        remove_resp = await client.delete(
+            f"/api/v1/lists/items/{item_list_id}", headers=auth_header
+        )
+        assert remove_resp.status_code == 204
+
+        # Verify removed
+        get_resp = await client.get(f"/api/v1/lists/{list_id}", headers=auth_header)
+        assert len(get_resp.json()["items"]) == 0
+
+    async def test_remove_not_found(self, client, auth_header):
+        resp = await client.delete(
+            "/api/v1/lists/items/00000000-0000-0000-0000-000000000000",
+            headers=auth_header,
+        )
+        assert resp.status_code == 404
+
+
 class TestCancelList:
     async def test_cancel(self, client, auth_header):
         lst = await client.post(
