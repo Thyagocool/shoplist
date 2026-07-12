@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { listsAPI, itemsAPI, categoriesAPI } from '../services/api';
-import type { ShoppingListResponse, ItemResponse, CategoryResponse } from '../types';
+import type { ShoppingListResponse, ItemResponse, CategoryResponse, ListItemResponse } from '../types';
 import Button from '../components/ui/Button';
 
 export default function ListDetail() {
@@ -112,6 +112,16 @@ export default function ListDetail() {
     } finally {
       setAddingAll(false);
     }
+  };
+
+  const updateItemLocal = (itemId: string, changes: Partial<ListItemResponse>) => {
+    if (!list) return;
+    setList({
+      ...list,
+      items: list.items.map(item =>
+        item.id === itemId ? { ...item, ...changes } : item
+      ),
+    });
   };
 
   const handleCheckout = async () => {
@@ -331,9 +341,9 @@ export default function ListDetail() {
                         defaultValue={item.estimated_quantity}
                         onBlur={async (e) => {
                           const val = parseFloat(e.target.value);
-                          if (!isNaN(val) && val > 0) {
+                          if (!isNaN(val) && val > 0 && val !== item.estimated_quantity) {
+                            updateItemLocal(item.id, { estimated_quantity: val });
                             await listsAPI.updateItem(item.id, { estimated_quantity: val });
-                            load();
                           }
                         }}
                         step="0.01"
@@ -361,8 +371,8 @@ export default function ListDetail() {
                                   e.preventDefault();
                                   setUnitOpen(null);
                                   if (u !== item.unit) {
+                                    updateItemLocal(item.id, { unit: u });
                                     await listsAPI.updateItem(item.id, { unit: u });
-                                    load();
                                   }
                                 }}
                               >
@@ -380,8 +390,10 @@ export default function ListDetail() {
                         onBlur={async (e) => {
                           const val = parseFloat(e.target.value);
                           const priceCents = isNaN(val) ? 0 : Math.round(val * 100);
-                          await listsAPI.updateItem(item.id, { price_cents: priceCents });
-                          load();
+                          if (priceCents !== item.price_cents) {
+                            updateItemLocal(item.id, { price_cents: priceCents });
+                            await listsAPI.updateItem(item.id, { price_cents: priceCents });
+                          }
                         }}
                         step="0.01"
                         min="0"
