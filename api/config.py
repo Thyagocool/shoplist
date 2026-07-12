@@ -3,7 +3,7 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     # Database
-    database_url: str = "sqlite+aiosqlite:///./data/shoplist.db"
+    database_url: str = "postgresql+asyncpg://shoplist:shoplist123@localhost:5432/shoplist"
 
     # Auth
     jwt_secret: str = "change-me-in-production"

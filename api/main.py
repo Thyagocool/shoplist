@@ -1,8 +1,22 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from config import settings
+from src.infrastructure.database.config import engine
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Handle startup and shutdown events."""
+    # Startup
+    async with engine.begin() as conn:
+        await conn.run_sync(lambda _: None)  # Just test the connection
+    yield
+    # Shutdown
+    await engine.dispose()
 
 
 def create_app() -> FastAPI:
@@ -12,6 +26,7 @@ def create_app() -> FastAPI:
         version="0.1.0",
         docs_url="/docs",
         redoc_url="/redoc",
+        lifespan=lifespan,
     )
 
     # CORS
