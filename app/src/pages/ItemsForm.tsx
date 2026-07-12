@@ -21,14 +21,14 @@ export default function ItemsForm() {
 
   useEffect(() => {
     (async () => {
-      const { data } = await categoriesAPI.list();
-      setCategories(data);
-      if (data.length > 0 && !categoryId) setCategoryId(data[0].id);
-    })();
-    if (isEdit) {
-      (async () => {
-        const { data } = await itemsAPI.list();
-        const item = data.find((i: { id: string }) => i.id === id);
+      // 1. Carrega categorias primeiro
+      const { data: cats } = await categoriesAPI.list();
+      setCategories(cats);
+
+      // 2. Se for edição, carrega o item e preenche os campos
+      if (isEdit) {
+        const { data: items } = await itemsAPI.list();
+        const item = items.find((i: { id: string }) => i.id === id);
         if (item) {
           setName(item.name);
           setCategoryId(item.category_id);
@@ -37,8 +37,8 @@ export default function ItemsForm() {
           setMinStock(String(item.min_stock));
           setMaxStock(String(item.max_stock));
         }
-      })();
-    }
+      }
+    })();
   }, [id]);
 
   const handleSubmit = async (e: FormEvent) => {
