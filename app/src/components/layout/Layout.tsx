@@ -60,8 +60,15 @@ export default function Layout() {
       </main>
 
       {/* Bottom Navigation — fixo embaixo */}
-      <nav className="bg-white border-t shadow-lg flex-shrink-0">
-        <div className="max-w-4xl mx-auto px-2 py-1 flex overflow-x-auto gap-1">
+      <nav className="bg-white border-t shadow-lg flex-shrink-0 relative">
+        {/* Fade nas laterais pra indicar que tem mais itens */}
+        <div className="absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+
+        <div
+          className="max-w-4xl mx-auto px-2 py-1 flex gap-1 overflow-x-auto scroll-smooth scrollbar-hide
+                     snap-x snap-mandatory touch-pan-x"
+        >
           {navItems.map((item) => {
             const isActive = location.pathname === item.path ||
               (item.path !== '/' && location.pathname.startsWith(item.path));
@@ -69,7 +76,8 @@ export default function Layout() {
               <button
                 key={item.path}
                 onClick={() => navigate(item.path)}
-                className={`flex flex-col items-center gap-0.5 px-3 py-2 rounded-lg text-xs whitespace-nowrap transition ${
+                className={`flex flex-col items-center gap-0.5 px-2.5 py-2 rounded-lg text-xs whitespace-nowrap
+                           transition snap-start shrink-0 ${
                   isActive
                     ? 'bg-primary-100 text-primary-700'
                     : 'text-gray-500 hover:text-gray-800 hover:bg-gray-100'
