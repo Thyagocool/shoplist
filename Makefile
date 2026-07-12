@@ -50,6 +50,16 @@ migration:
 migrate:
 	docker compose exec api alembic upgrade head
 
+# Para servidor remoto (acesso SSH)
+remote-migrate:
+	@echo "Uso: make remote-migrate SSH_HOST=user@servidor"
+	ssh $(SSH_HOST) "cd /path/to/shoplist/api && alembic upgrade head"
+
+remote-import:
+	@echo "Uso: make remote-import SSH_HOST=user@servidor DB_URL=postgresql+asyncpg://..."
+	scp docs/export_thyagocool.sql $(SSH_HOST):/tmp/
+	ssh $(SSH_HOST) "psql '$(DB_URL)' -f /tmp/export_thyagocool.sql && rm /tmp/export_thyagocool.sql"
+
 # ─── Frontend ───────────────────────────────────────────────────
 app-build:
 	cd app && npm run build

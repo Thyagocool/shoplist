@@ -46,7 +46,7 @@ services:
       timeout: 5s
       retries: 3
       start_period: 20s
-    command: uvicorn main:app --reload --host 0.0.0.0 --port 8000
+    command: ["--reload"]
     restart: unless-stopped
     networks:
       - shoplist-net
