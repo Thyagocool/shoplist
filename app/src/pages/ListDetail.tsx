@@ -436,7 +436,21 @@ export default function ListDetail() {
                   onClick={() => setExpanded(allExpanded ? new Set() : new Set(allCatKeys))}
                   className="text-xs px-3 py-1 rounded-full border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 transition"
                 >
-                  {allExpanded ? '📂 Recolher tudo' : '📂 Expandir tudo'}
+                  {allExpanded ? (
+                    <span className="inline-flex items-center gap-1">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5" />
+                      </svg>
+                      Recolher tudo
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
+                      </svg>
+                      Expandir tudo
+                    </span>
+                  )}
                 </button>
               )}
 
