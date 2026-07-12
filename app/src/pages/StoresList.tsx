@@ -63,7 +63,7 @@ export default function StoresList() {
         <h2 className="text-xl font-bold text-gray-800">Lojas</h2>
         <button
           onClick={() => { setShowForm(true); setEditId(null); setName(''); }}
-          className="bg-primary-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-primary-700 transition"
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition"
         >
           + Nova Loja
         </button>

@@ -168,7 +168,7 @@ export default function ListDetail() {
             <>
               <button
                 onClick={() => setShowAdd(!showAdd)}
-                className="bg-primary-600 text-white px-3 py-1.5 rounded text-sm hover:bg-primary-700"
+                className="bg-blue-600 text-white px-3 py-1.5 rounded text-sm hover:bg-blue-700"
               >
                 + Item
               </button>

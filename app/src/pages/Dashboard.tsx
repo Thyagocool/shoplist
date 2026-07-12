@@ -109,7 +109,7 @@ export default function Dashboard() {
       <div className="grid grid-cols-2 gap-4">
         <Link
           to="/lists/new"
-          className="bg-primary-600 text-white rounded-xl p-4 text-center hover:bg-primary-700 transition shadow-sm"
+          className="bg-blue-600 text-white rounded-xl p-4 text-center hover:bg-blue-700 transition shadow-sm"
         >
           <p className="text-lg font-bold">+</p>
           <p className="text-sm">Nova Lista</p>
