@@ -21,6 +21,7 @@ class AddListItemRequest(BaseModel):
 class UpdateListItemRequest(BaseModel):
     unit: str | None = None
     estimated_quantity: Decimal | None = None
+    price_cents: int | None = None
 
 
 class ListItemResponse(BaseModel):

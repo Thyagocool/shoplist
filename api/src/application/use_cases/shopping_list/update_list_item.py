@@ -21,6 +21,7 @@ class UpdateListItemUseCase:
         user_id: UUID,
         unit: str | None = None,
         estimated_quantity: Decimal | None = None,
+        price_cents: int | None = None,
     ) -> ListItemOutput | None:
         result = await self.repo.session.execute(
             select(ShoppingListItemModel)
@@ -39,6 +40,8 @@ class UpdateListItemUseCase:
             model.unit = unit
         if estimated_quantity is not None:
             model.estimated_quantity = float(estimated_quantity)
+        if price_cents is not None:
+            model.price_cents = price_cents
 
         await self.repo.session.flush()
         await self.uow.commit()

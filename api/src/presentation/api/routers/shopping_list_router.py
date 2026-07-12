@@ -251,6 +251,7 @@ async def update_list_item(
             user_id=user_id,
             unit=body.unit,
             estimated_quantity=body.estimated_quantity,
+            price_cents=body.price_cents,
         )
     except ValueError as e:
         from fastapi import HTTPException
