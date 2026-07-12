@@ -130,7 +130,7 @@
 | 📜 | Histórico | `/history` |
 | 👤 | Perfil | `/profile` |
 
-- Item ativo destacado em verde
+- Item ativo destacado em vermelho
 - Scroll horizontal em telas pequenas
 - Header com nome do usuário + botão Sair
 

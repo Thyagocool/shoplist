@@ -117,13 +117,13 @@ Volumes nomeados para persistência: `api-data`, `api-uploads`.
 ### 🎨 Frontend — Configurações
 
 - **`vite.config.ts`**: React + PWA plugin + proxy para API + runtime caching
-- **`tailwind.config.js`**: Cores primárias verde (`primary-50` a `primary-900`)
+- **`tailwind.config.js`**: Cores primárias vermelho (`primary-50` a `primary-900`)
 - **`index.css`**: Componentes Tailwind customizados (`.btn-primary`, `.input-field`, `.card`)
 - **`App.tsx`**: Rotas iniciais com HomePage, LoginPage e RegisterPage (placeholders)
 
 ### 🖼️ PWA Icons
 
-Ícones PNG sólidos (verde `#16a34a`) gerados via script Python para 192x192 e 512x512.
+Ícones PNG sólidos (vermelho `#e31414`) gerados via script Python para 192x192 e 512x512.
 
 ### 🧪 Testes
 

@@ -104,7 +104,7 @@ Reflete todos os schemas do backend:
 | Componente | Arquivo | Funcionalidades |
 |------------|---------|-----------------|
 | `ProtectedRoute` | `components/layout/ProtectedRoute.tsx` | Redireciona para `/login` se não autenticado |
-| `Layout` | `components/layout/Layout.tsx` | Header verde com nome do usuário + botão Sair |
+| `Layout` | `components/layout/Layout.tsx` | Header vermelho com nome do usuário + botão Sair |
 
 ### Páginas
 

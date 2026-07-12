@@ -12,7 +12,7 @@ export default defineConfig({
         name: 'Shoplist',
         short_name: 'Shoplist',
         description: 'Sua lista de compras inteligente',
-        theme_color: '#16a34a',
+        theme_color: '#e31414',
         background_color: '#ffffff',
         display: 'standalone',
         scope: '/',
