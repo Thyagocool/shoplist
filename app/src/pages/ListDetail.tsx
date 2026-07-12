@@ -156,7 +156,7 @@ export default function ListDetail() {
             <>
               <button
                 onClick={() => setShowAdd(!showAdd)}
-                className="bg-green-600 text-white px-3 py-1.5 rounded text-sm hover:bg-green-700"
+                className="bg-primary-600 text-white px-3 py-1.5 rounded text-sm hover:bg-primary-700"
               >
                 + Item
               </button>
@@ -278,7 +278,7 @@ export default function ListDetail() {
                 checked={item.checked}
                 onChange={() => handleToggle(item.id)}
                 disabled={!isEditable}
-                className="h-5 w-5 text-green-600 rounded"
+                className="h-5 w-5 text-primary-600 rounded"
               />
               <div className="flex-1">
                 <p className={`font-medium ${item.checked ? 'line-through text-gray-400' : 'text-gray-800'}`}>

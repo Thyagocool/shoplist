@@ -75,7 +75,7 @@ export default function ListForm() {
               type="checkbox"
               checked={includeItems}
               onChange={(e) => setIncludeItems(e.target.checked)}
-              className="h-5 w-5 text-green-600 rounded"
+              className="h-5 w-5 text-primary-600 rounded"
             />
             <span className="text-sm font-medium text-gray-700">
               Incluir itens do catálogo

@@ -55,7 +55,7 @@ export default function History() {
                     </p>
                   </div>
                   {spent > 0 && (
-                    <p className="text-lg font-bold text-green-700">
+                    <p className="text-lg font-bold text-primary-700">
                       R$ {(spent / 100).toFixed(2)}
                     </p>
                   )}

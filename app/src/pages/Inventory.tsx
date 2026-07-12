@@ -78,7 +78,7 @@ export default function Inventory() {
       {items.length === 0 ? (
         <p className="text-gray-400 text-center py-8">
           Nenhum item no catálogo.{' '}
-          <button onClick={() => navigate('/items/new')} className="text-green-600 hover:underline">
+          <button onClick={() => navigate('/items/new')} className="text-primary-600 hover:underline">
             Cadastre itens primeiro
           </button>
         </p>
@@ -99,7 +99,7 @@ export default function Inventory() {
                   </div>
                   <div className="text-right">
                     <p className="text-sm font-semibold">
-                      Precisa: <span className={need > 0 ? 'text-orange-600' : 'text-green-600'}>{need}</span>
+                      Precisa: <span className={need > 0 ? 'text-orange-600' : 'text-primary-600'}>{need}</span>
                     </p>
                   </div>
                 </div>

@@ -87,7 +87,7 @@ export default function Stock() {
                 {item.max_stock > 0 && (
                   <div className="mt-2 bg-gray-200 rounded-full h-2">
                     <div
-                      className="bg-green-500 h-2 rounded-full"
+                      className="bg-primary-500 h-2 rounded-full"
                       style={{ width: `${Math.min(100, (item.min_stock / item.max_stock) * 100)}%` }}
                     />
                   </div>

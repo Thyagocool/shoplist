@@ -25,7 +25,7 @@ export default function Register() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-green-700">Shoplist</h1>
+          <h1 className="text-3xl font-bold text-primary-700">Shoplist</h1>
           <p className="text-gray-500 mt-1">Crie sua conta</p>
         </div>
 
@@ -84,7 +84,7 @@ export default function Register() {
 
           <p className="text-center text-sm text-gray-500">
             Já tem conta?{' '}
-            <Link to="/login" className="text-green-600 hover:underline">
+            <Link to="/login" className="text-primary-600 hover:underline">
               Entrar
             </Link>
           </p>

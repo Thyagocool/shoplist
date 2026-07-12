@@ -209,7 +209,7 @@ export default function ItemsList() {
                 <div
                   key={item.id}
                   className={`bg-white rounded-lg shadow-sm border p-4 flex items-center justify-between ${
-                    editId === item.id ? 'ring-2 ring-green-400' : ''
+                    editId === item.id ? 'ring-2 ring-primary-400' : ''
                   }`}
                 >
                   <div>

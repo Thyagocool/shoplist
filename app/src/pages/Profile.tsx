@@ -17,8 +17,8 @@ export default function Profile() {
 
       <div className="bg-white rounded-xl shadow-sm p-6 space-y-4">
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
-            <span className="text-2xl font-bold text-green-700">
+          <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center">
+            <span className="text-2xl font-bold text-primary-700">
               {user?.name?.charAt(0).toUpperCase() || '?'}
             </span>
           </div>

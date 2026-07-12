@@ -43,7 +43,7 @@ export default function Lists() {
         <h2 className="text-xl font-bold text-gray-800">Listas de Compras</h2>
         <button
           onClick={() => navigate('/lists/new')}
-          className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700 transition"
+          className="bg-primary-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-primary-700 transition"
         >
           + Nova Lista
         </button>
@@ -67,7 +67,7 @@ export default function Lists() {
                   >
                     <Link
                       to={`/lists/${list.id}`}
-                      className="font-medium text-gray-800 hover:text-green-700"
+                      className="font-medium text-gray-800 hover:text-primary-700"
                     >
                       {list.name}
                     </Link>
@@ -78,7 +78,7 @@ export default function Lists() {
                     <div className="flex gap-2 mt-2">
                       <button
                         onClick={() => handleComplete(list.id)}
-                        className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded"
+                        className="text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded"
                       >
                         Finalizar
                       </button>
@@ -110,7 +110,7 @@ export default function Lists() {
                     <div className="flex items-center justify-between">
                       <span className="font-medium text-gray-800">{list.name}</span>
                       <span className={`text-xs px-2 py-0.5 rounded ${
-                        list.status === 'completed' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'
+                        list.status === 'completed' ? 'bg-primary-100 text-primary-700' : 'bg-gray-100 text-gray-500'
                       }`}>
                         {list.status === 'completed' ? 'OK' : 'Cancelado'}
                       </span>

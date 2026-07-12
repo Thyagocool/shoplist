@@ -27,7 +27,7 @@ export default function Layout() {
   return (
     <div className="h-screen bg-gray-50 flex flex-col">
       {/* Header — fixo no topo */}
-      <header className="bg-green-700 text-white shadow-md flex-shrink-0">
+      <header className="bg-primary-700 text-white shadow-md flex-shrink-0">
         <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
           <h1
             className="text-xl font-bold cursor-pointer"
@@ -45,7 +45,7 @@ export default function Layout() {
               </button>
               <button
                 onClick={handleLogout}
-                className="text-sm bg-green-600 hover:bg-green-500 px-3 py-1 rounded transition"
+                className="text-sm bg-primary-600 hover:bg-primary-500 px-3 py-1 rounded transition"
               >
                 Sair
               </button>
@@ -71,7 +71,7 @@ export default function Layout() {
                 onClick={() => navigate(item.path)}
                 className={`flex flex-col items-center gap-0.5 px-3 py-2 rounded-lg text-xs whitespace-nowrap transition ${
                   isActive
-                    ? 'bg-green-100 text-green-700'
+                    ? 'bg-primary-100 text-primary-700'
                     : 'text-gray-500 hover:text-gray-800 hover:bg-gray-100'
                 }`}
               >
