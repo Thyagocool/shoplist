@@ -317,18 +317,18 @@ export default function ListDetail() {
                 disabled={!isEditable}
                 className="h-5 w-5 text-primary-600 rounded"
               />
-              <div className="flex-1">
-                <p className={`font-medium ${item.checked ? 'line-through text-gray-400' : 'text-gray-800'}`}>
+              <div className="flex-1 min-w-0">
+                <p className={`font-medium truncate ${item.checked ? 'line-through text-gray-400' : 'text-gray-800'}`}>
                   {item.item_name || item.custom_name}
                 </p>
-                <p className="text-sm text-gray-500">
+                <div className={`flex items-center gap-1.5 mt-1 ${isEditable ? '' : 'text-sm text-gray-500'}`}>
                   {isEditable ? (
-                    <span className="flex items-center gap-1">
+                    <>
                       <input
                         type="number"
                         className="w-14 border rounded px-1 py-0.5 text-sm text-center"
-                        value={item.estimated_quantity}
-                        onChange={async (e) => {
+                        defaultValue={item.estimated_quantity}
+                        onBlur={async (e) => {
                           const val = parseFloat(e.target.value);
                           if (!isNaN(val) && val > 0) {
                             await listsAPI.updateItem(item.id, { estimated_quantity: val });
@@ -340,7 +340,7 @@ export default function ListDetail() {
                       />
                       <select
                         className="border rounded px-1 py-0.5 text-sm"
-                        value={item.unit}
+                        defaultValue={item.unit}
                         onChange={async (e) => {
                           await listsAPI.updateItem(item.id, { unit: e.target.value });
                           load();
@@ -350,43 +350,40 @@ export default function ListDetail() {
                           <option key={u} value={u}>{u}</option>
                         ))}
                       </select>
-                    </span>
+                      <input
+                        type="number"
+                        className="w-20 border rounded px-2 py-0.5 text-sm text-right"
+                        placeholder="R$"
+                        defaultValue={item.price_cents ? (item.price_cents / 100).toFixed(2) : ''}
+                        onBlur={async (e) => {
+                          const val = parseFloat(e.target.value);
+                          const priceCents = isNaN(val) ? 0 : Math.round(val * 100);
+                          await listsAPI.updateItem(item.id, { price_cents: priceCents });
+                          load();
+                        }}
+                        step="0.01"
+                        min="0"
+                      />
+                    </>
                   ) : (
-                    <>{item.estimated_quantity} {item.unit}</>
+                    <span>
+                      {item.estimated_quantity} {item.unit}
+                      {item.price_cents ? ` · R$ ${(item.price_cents / 100).toFixed(2)}` : ''}
+                    </span>
                   )}
-                  {item.price_cents ? ` · R$ ${(item.price_cents / 100).toFixed(2)}` : ''}
-                </p>
+                </div>
               </div>
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-1 shrink-0">
                 {isEditable && (
-                  <>
-                    {/* Preço */}
-                    <input
-                      type="number"
-                      className="w-20 border rounded px-2 py-1 text-sm text-right"
-                      placeholder="Preço"
-                      value={item.price_cents ? (item.price_cents / 100).toFixed(2) : ''}
-                      onChange={async (e) => {
-                        const val = parseFloat(e.target.value);
-                        const priceCents = isNaN(val) ? 0 : Math.round(val * 100);
-                        await listsAPI.updateItem(item.id, { price_cents: priceCents });
-                        load();
-                      }}
-                      step="0.01"
-                      min="0"
-                    />
-
-                    {/* Lixeira */}
-                    <button
-                      onClick={() => handleRemove(item.id)}
-                      className="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition"
-                      title="Remover da lista"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                      </svg>
-                    </button>
-                  </>
+                  <button
+                    onClick={() => handleRemove(item.id)}
+                    className="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition"
+                    title="Remover da lista"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                  </button>
                 )}
               </div>
             </div>
