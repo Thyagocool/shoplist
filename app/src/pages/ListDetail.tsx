@@ -432,28 +432,12 @@ export default function ListDetail() {
             <div className="space-y-4">
               {/* Collapse / Expand all */}
               {allCatKeys.length > 1 && (
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setExpanded(new Set(allCatKeys))}
-                    className={`text-xs px-3 py-1 rounded-full border transition ${
-                      allExpanded
-                        ? 'bg-primary-50 text-primary-700 border-primary-200'
-                        : 'bg-white text-gray-500 border-gray-200 hover:bg-gray-50'
-                    }`}
-                  >
-                    Expandir tudo
-                  </button>
-                  <button
-                    onClick={() => setExpanded(new Set())}
-                    className={`text-xs px-3 py-1 rounded-full border transition ${
-                      !allExpanded
-                        ? 'bg-primary-50 text-primary-700 border-primary-200'
-                        : 'bg-white text-gray-500 border-gray-200 hover:bg-gray-50'
-                    }`}
-                  >
-                    Recolher tudo
-                  </button>
-                </div>
+                <button
+                  onClick={() => setExpanded(allExpanded ? new Set() : new Set(allCatKeys))}
+                  className="text-xs px-3 py-1 rounded-full border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 transition"
+                >
+                  {allExpanded ? '📂 Recolher tudo' : '📂 Expandir tudo'}
+                </button>
               )}
 
               {sortedGroups.map(([catId, catItems]) => {
