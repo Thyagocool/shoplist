@@ -3,19 +3,22 @@ services:
     image: postgres:16-alpine
     container_name: shoplist-postgres
     environment:
-      POSTGRES_DB: shoplist
-      POSTGRES_USER: shoplist
-      POSTGRES_PASSWORD: shoplist123
+      POSTGRES_DB: ${POSTGRES_DB:-shoplist}
+      POSTGRES_USER: ${POSTGRES_USER:-shoplist}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-shoplist123}
     ports:
-      - "5432:5432"
+      - "${POSTGRES_PORT:-5432}:5432"
     volumes:
       - pg-data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U shoplist"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-shoplist}"]
       interval: 5s
       timeout: 5s
       retries: 5
+      start_period: 10s
     restart: unless-stopped
+    networks:
+      - shoplist-net
 
   api:
     build:
@@ -23,22 +26,30 @@ services:
       dockerfile: Dockerfile
     container_name: shoplist-api
     ports:
-      - "8000:8000"
+      - "${API_PORT:-8000}:8000"
     volumes:
       - ./api:/app
       - api-uploads:/app/uploads
     environment:
-      - DATABASE_URL=postgresql+asyncpg://shoplist:shoplist123@postgres:5432/shoplist
-      - JWT_SECRET=dev-secret-key-change-in-production
-      - JWT_ALGORITHM=HS256
-      - ACCESS_TOKEN_EXPIRE_MINUTES=15
-      - REFRESH_TOKEN_EXPIRE_DAYS=7
-      - UPLOAD_DIR=./uploads
+      - DATABASE_URL=${DATABASE_URL:-postgresql+asyncpg://shoplist:shoplist123@postgres:5432/shoplist}
+      - JWT_SECRET=${JWT_SECRET:-dev-secret-key-change-in-production}
+      - JWT_ALGORITHM=${JWT_ALGORITHM:-HS256}
+      - ACCESS_TOKEN_EXPIRE_MINUTES=${ACCESS_TOKEN_EXPIRE_MINUTES:-15}
+      - REFRESH_TOKEN_EXPIRE_DAYS=${REFRESH_TOKEN_EXPIRE_DAYS:-7}
+      - UPLOAD_DIR=${UPLOAD_DIR:-./uploads}
     depends_on:
       postgres:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health').read()"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
     command: uvicorn main:app --reload --host 0.0.0.0 --port 8000
     restart: unless-stopped
+    networks:
+      - shoplist-net
 
   app:
     build:
@@ -46,7 +57,7 @@ services:
       dockerfile: Dockerfile
     container_name: shoplist-app
     ports:
-      - "5173:5173"
+      - "${APP_PORT:-5173}:5173"
     volumes:
       - ./app:/app
       - /app/node_modules
@@ -54,7 +65,13 @@ services:
       - api
     command: npm run dev
     restart: unless-stopped
+    networks:
+      - shoplist-net
 
 volumes:
   pg-data:
   api-uploads:
+
+networks:
+  shoplist-net:
+    driver: bridge
