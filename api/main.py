@@ -6,16 +6,17 @@ from fastapi.staticfiles import StaticFiles
 
 from config import settings
 from src.infrastructure.database.config import engine
+from src.presentation.api.errors.handlers import register_error_handlers
+from src.presentation.api.routers.auth_router import router as auth_router
+from src.presentation.api.routers.category_router import router as category_router
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Handle startup and shutdown events."""
-    # Startup
     async with engine.begin() as conn:
-        await conn.run_sync(lambda _: None)  # Just test the connection
+        await conn.run_sync(lambda _: None)
     yield
-    # Shutdown
     await engine.dispose()
 
 
@@ -41,15 +42,17 @@ def create_app() -> FastAPI:
     # Static files for uploads
     app.mount("/uploads", StaticFiles(directory=settings.upload_dir), name="uploads")
 
+    # Error handlers
+    register_error_handlers(app)
+
     # Health check
     @app.get("/health")
     async def health_check():
         return {"status": "ok", "version": "0.1.0"}
 
-    # TODO: Register routers here as features are implemented
-    # app.include_router(auth_router, prefix="/api/v1/auth", tags=["Auth"])
-    # app.include_router(category_router, prefix="/api/v1/categories", tags=["Categories"])
-    # ...
+    # Routers
+    app.include_router(auth_router)
+    app.include_router(category_router)
 
     return app
 
