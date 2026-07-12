@@ -15,7 +15,7 @@
 | 🟢 **FASE 1** — Backend Core (entidades, auth, CRUDs) | ✅ **Concluída** |
 | 🟢 **FASE 2** — Backend Features (itens, lojas, inventário, lista, checkout, OCR) | ✅ **Concluída** |
 | 🟢 **FASE 3** — Frontend Core (Login, Cadastro, Dashboard) | ✅ **Concluída** |
-| ⬜ FASE 4 — Frontend Features | ❌ Pendente |
+| 🟢 **FASE 4** — Frontend Features (Catálogo, Lojas, Lista, OCR, Estoque, Perfil) | ✅ **Concluída** |
 | ⬜ FASE 5 — Finalização | ❌ Pendente |
 
 **Progresso:** 7 de 24 etapas concluídas ✅ (~29%)
@@ -1458,12 +1458,12 @@ docker compose -f docker-compose.prod.yml up -d --build
 | 3.1 | Setup frontend (Vite, PWA, Router) | 0.2 | 1h | ✅ |
 | 3.2 | API services + Auth store | 3.1 | 1h | ✅ |
 | 3.3 | Telas Login + Cadastro | 3.2 | 2h | ✅ |
-| 4.1 | Dashboard + Catálogo + Lojas | 3.3, 1.4, 2.1, 2.2 | 4h | ❌ |
-| 4.2 | Inventário (tela) | 4.1, 2.3 | 3h | ❌ |
-| 4.3 | Lista + Checklist Offline | 4.1, 2.4 | 4h | ❌ |
-| 4.4 | Câmera + OCR | 4.3, 2.6 | 3h | ❌ |
-| 4.5 | Estoque + Alertas + Histórico | 4.1, 2.5 | 2h | ❌ |
-| 4.6 | Perfil | 3.3 | 1h | ❌ |
+| 4.1 | Dashboard + Catálogo + Lojas | 3.3, 1.4, 2.1, 2.2 | 4h | ✅ |
+| 4.2 | Inventário (tela) | 4.1, 2.3 | 3h | ✅ |
+| 4.3 | Lista + Checklist Offline | 4.1, 2.4 | 4h | ✅ |
+| 4.4 | Câmera + OCR | 4.3, 2.6 | 3h | ✅ |
+| 4.5 | Estoque + Alertas + Histórico | 4.1, 2.5 | 2h | ✅ |
+| 4.6 | Perfil | 3.3 | 1h | ✅ |
 | 5.1 | Testes | todas | 4h | ❌ |
 | 5.2 | Docker + Deploy | 5.1 | 2h | ❌ |
 | | **Total** | | **~49h** | |
@@ -1483,7 +1483,7 @@ Semana 6  → Etapas 5.1 e 5.2 (Testes + Deploy)
 
 ---
 
-> **Progresso:** 15 de 24 etapas concluídas ✅ (~63%)
+> **Progresso:** 21 de 24 etapas concluídas ✅ (~88%)
 >
-> **Próximo passo:** **FASE 4 — Frontend Features** (Dashboard completo, catálogo, lojas, inventário, lista, OCR).
-> Base do frontend pronta com auth, API services e layout.
+> **Próximo passo:** **FASE 5 — Finalização** (testes, Docker, deploy).
+> App praticamente completo! Faltam testes automatizados e ajustes finais.
