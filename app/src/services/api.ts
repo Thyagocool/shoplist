@@ -1,4 +1,5 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
+import { redirectToLogin } from '../lib/authRedirect';
 
 const API_BASE = import.meta.env.VITE_API_URL || '/api/v1';
 
@@ -60,7 +61,7 @@ api.interceptors.response.use(
       if (!refreshToken) {
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
-        window.location.href = '/login';
+        redirectToLogin();
         return Promise.reject(error);
       }
 
@@ -79,7 +80,7 @@ api.interceptors.response.use(
         processQueue(error, null);
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
-        window.location.href = '/login';
+        redirectToLogin();
         return Promise.reject(error);
       } finally {
         isRefreshing = false;

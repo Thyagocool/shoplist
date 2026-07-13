@@ -1,6 +1,7 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAuthStore } from './store/authStore';
+import { onRedirectToLogin } from './lib/authRedirect';
 import Layout from './components/layout/Layout';
 import ProtectedRoute from './components/layout/ProtectedRoute';
 import Login from './pages/Login';
@@ -18,9 +19,11 @@ import Stock from './pages/Stock';
 import History from './pages/History';
 import Profile from './pages/Profile';
 
-export default function App() {
+/** Inner component that lives inside BrowserRouter so we can use useNavigate */
+function AppContent() {
   const loadUser = useAuthStore((s) => s.loadUser);
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -28,40 +31,52 @@ export default function App() {
     }
   }, []);
 
+  /* Listen for auth redirect events — avoids window.location.href
+     which can cause the PWA to open the browser on some Android devices */
+  useEffect(() => {
+    return onRedirectToLogin(() => navigate('/login', { replace: true }));
+  }, [navigate]);
+
+  return (
+    <Routes>
+      {/* Public */}
+      <Route
+        path="/login"
+        element={isAuthenticated ? <Navigate to="/" replace /> : <Login />}
+      />
+      <Route
+        path="/register"
+        element={isAuthenticated ? <Navigate to="/" replace /> : <Register />}
+      />
+
+      {/* Protected */}
+      <Route element={<ProtectedRoute />}>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/categories" element={<CategoriesList />} />
+          <Route path="/items" element={<ItemsList />} />
+          <Route path="/stores" element={<StoresList />} />
+          <Route path="/lists" element={<Lists />} />
+          <Route path="/lists/new" element={<ListForm />} />
+          <Route path="/lists/:id" element={<ListDetail />} />
+          <Route path="/inventory" element={<Inventory />} />
+          <Route path="/ocr" element={<OCR />} />
+          <Route path="/stock" element={<Stock />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/profile" element={<Profile />} />
+        </Route>
+      </Route>
+
+      {/* Fallback */}
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  );
+}
+
+export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        {/* Public */}
-        <Route
-          path="/login"
-          element={isAuthenticated ? <Navigate to="/" replace /> : <Login />}
-        />
-        <Route
-          path="/register"
-          element={isAuthenticated ? <Navigate to="/" replace /> : <Register />}
-        />
-
-        {/* Protected */}
-        <Route element={<ProtectedRoute />}>
-          <Route element={<Layout />}>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/categories" element={<CategoriesList />} />
-            <Route path="/items" element={<ItemsList />} />
-            <Route path="/stores" element={<StoresList />} />
-            <Route path="/lists" element={<Lists />} />
-            <Route path="/lists/new" element={<ListForm />} />
-            <Route path="/lists/:id" element={<ListDetail />} />
-            <Route path="/inventory" element={<Inventory />} />
-            <Route path="/ocr" element={<OCR />} />
-            <Route path="/stock" element={<Stock />} />
-            <Route path="/history" element={<History />} />
-            <Route path="/profile" element={<Profile />} />
-          </Route>
-        </Route>
-
-        {/* Fallback */}
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+      <AppContent />
     </BrowserRouter>
   );
 }
