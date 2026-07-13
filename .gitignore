@@ -22,6 +22,7 @@ api/uploads/*
 # Node
 node_modules/
 app/dist/
+app/dev-dist/
 app/.vite/
 *.tsbuildinfo
 app/vite.config.d.ts
