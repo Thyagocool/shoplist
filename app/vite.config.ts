@@ -7,7 +7,10 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'icons/*.png'],
+      includeAssets: ['favicon.ico', 'favicon.svg', 'icons/*.png'],
+      devOptions: {
+        enabled: true,
+      },
       manifest: {
         name: 'Shoplist',
         short_name: 'Shoplist',
