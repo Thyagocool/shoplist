@@ -1,17 +1,18 @@
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../../store/authStore';
+import HeroIcon from '../ui/HeroIcon';
 
 const navItems = [
-  { path: '/', label: 'Início', icon: '🏠' },
-  { path: '/categories', label: 'Categorias', icon: '🏷️' },
-  { path: '/items', label: 'Itens', icon: '📦' },
-  { path: '/stores', label: 'Lojas', icon: '🏪' },
-  { path: '/lists', label: 'Listas', icon: '📋' },
-  { path: '/inventory', label: 'Inventário', icon: '🏠' },
-  { path: '/ocr', label: 'OCR', icon: '📸' },
-  { path: '/stock', label: 'Estoque', icon: '📊' },
-  { path: '/history', label: 'Histórico', icon: '📜' },
-  { path: '/profile', label: 'Perfil', icon: '👤' },
+  { path: '/', label: 'Início', icon: 'home' as const },
+  { path: '/categories', label: 'Categorias', icon: 'tag' as const },
+  { path: '/items', label: 'Itens', icon: 'cube' as const },
+  { path: '/stores', label: 'Lojas', icon: 'store' as const },
+  { path: '/lists', label: 'Listas', icon: 'clipboard-list' as const },
+  { path: '/inventory', label: 'Inventário', icon: 'archive-box' as const },
+  { path: '/ocr', label: 'OCR', icon: 'camera' as const },
+  { path: '/stock', label: 'Estoque', icon: 'archive-box' as const },
+  { path: '/history', label: 'Histórico', icon: 'clock' as const },
+  { path: '/profile', label: 'Perfil', icon: 'user' as const },
 ];
 
 export default function Layout() {
@@ -83,7 +84,7 @@ export default function Layout() {
                     : 'text-gray-500 hover:text-gray-800 hover:bg-gray-100'
                 }`}
               >
-                <span className="text-base">{item.icon}</span>
+                <HeroIcon name={item.icon} className="size-5" />
                 <span>{item.label}</span>
               </button>
             );

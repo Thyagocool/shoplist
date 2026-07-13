@@ -67,7 +67,7 @@ export default function CategoriesList() {
         <h2 className="text-xl font-bold text-gray-800">Categorias</h2>
         <button
           onClick={() => { setShowForm(true); setEditId(null); setName(''); }}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition"
+          className="border border-blue-600 text-blue-600 bg-transparent hover:bg-blue-50 px-4 py-2 rounded-lg text-sm font-medium transition"
         >
           + Nova Categoria
         </button>

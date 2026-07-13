@@ -168,14 +168,14 @@ export default function ListDetail() {
             <>
               <button
                 onClick={() => setShowAdd(!showAdd)}
-                className="bg-blue-600 text-white px-3 py-1.5 rounded text-sm hover:bg-blue-700"
+                className="border border-blue-600 text-blue-600 bg-transparent hover:bg-blue-50 px-3 py-1.5 rounded text-sm font-medium transition"
               >
                 + Item
               </button>
               <button
                 onClick={handleAddAll}
                 disabled={addingAll}
-                className="bg-blue-600 text-white px-3 py-1.5 rounded text-sm hover:bg-blue-700 disabled:opacity-50"
+                className="border border-blue-600 text-blue-600 bg-transparent hover:bg-blue-50 px-3 py-1.5 rounded text-sm font-medium transition disabled:opacity-50"
               >
                 {addingAll ? '...' : '+ Todos'}
               </button>

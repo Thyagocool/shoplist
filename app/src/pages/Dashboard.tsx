@@ -109,14 +109,14 @@ export default function Dashboard() {
       <div className="grid grid-cols-2 gap-4">
         <Link
           to="/lists/new"
-          className="bg-blue-600 text-white rounded-xl p-4 text-center hover:bg-blue-700 transition shadow-sm"
+          className="border border-blue-600 text-blue-600 bg-transparent hover:bg-blue-50 rounded-xl p-4 text-center transition shadow-sm"
         >
           <p className="text-lg font-bold">+</p>
           <p className="text-sm">Nova Lista</p>
         </Link>
         <Link
           to="/items"
-          className="bg-blue-600 text-white rounded-xl p-4 text-center hover:bg-blue-700 transition shadow-sm"
+          className="border border-blue-600 text-blue-600 bg-transparent hover:bg-blue-50 rounded-xl p-4 text-center transition shadow-sm"
         >
           <p className="text-lg font-bold">📦</p>
           <p className="text-sm">Catálogo</p>
