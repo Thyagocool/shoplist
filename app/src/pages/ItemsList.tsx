@@ -224,13 +224,13 @@ export default function ItemsList() {
                   <div className="flex gap-2">
                     <button
                       onClick={() => handleEdit(item)}
-                      className="text-sm text-blue-600 hover:underline"
+                      className="border border-blue-200 text-blue-600 bg-blue-50 hover:bg-blue-600 hover:text-white hover:border-blue-600 active:bg-blue-700 active:text-white px-2 py-0.5 rounded text-xs font-medium transition"
                     >
                       Editar
                     </button>
                     <button
                       onClick={() => handleDelete(item.id)}
-                      className="text-sm text-red-600 hover:underline"
+                      className="border border-red-200 text-red-600 bg-red-50 hover:bg-red-600 hover:text-white hover:border-red-600 active:bg-red-700 active:text-white px-2 py-0.5 rounded text-xs font-medium transition"
                     >
                       Desativar
                     </button>

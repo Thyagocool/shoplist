@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { itemsAPI, listsAPI, inventoryAPI } from '../services/api';
 import type { ItemResponse } from '../types';
 import Button from '../components/ui/Button';
+import HeroIcon from '../components/ui/HeroIcon';
 
 export default function Inventory() {
   const [items, setItems] = useState<ItemResponse[]>([]);
@@ -69,19 +70,25 @@ export default function Inventory() {
   return (
     <div className="space-y-4">
       <div>
-        <h2 className="text-xl font-bold text-gray-800">Inventário 🏠</h2>
+        <div className="flex items-center gap-2">
+          <HeroIcon name="archive-box" className="size-6 text-gray-800" />
+          <h2 className="text-xl font-bold text-gray-800">Inventário</h2>
+        </div>
         <p className="text-sm text-gray-500">
           Informe quanto você tem em casa de cada item. A lista será gerada com o que falta.
         </p>
       </div>
 
       {items.length === 0 ? (
-        <p className="text-gray-400 text-center py-8">
-          Nenhum item no catálogo.{' '}
-          <button onClick={() => navigate('/items/new')} className="text-primary-600 hover:underline">
-            Cadastre itens primeiro
+        <div className="text-center py-8">
+          <p className="text-gray-400 mb-3">Nenhum item no catálogo.</p>
+          <button
+            onClick={() => navigate('/items/new')}
+            className="bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-600 hover:text-white hover:border-blue-600 active:bg-blue-700 active:text-white px-4 py-2 rounded-lg text-sm font-medium transition"
+          >
+            Cadastrar Primeiro Item
           </button>
-        </p>
+        </div>
       ) : (
         <div className="space-y-2">
           {items.map((item) => {

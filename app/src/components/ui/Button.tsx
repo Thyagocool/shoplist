@@ -17,9 +17,9 @@ export default function Button({
     'w-full px-4 py-2 rounded-lg font-medium transition disabled:opacity-50 disabled:cursor-not-allowed';
 
   const variants = {
-    primary: 'border border-blue-600 text-blue-600 bg-transparent hover:bg-blue-50 focus:ring-2 focus:ring-blue-500',
-    secondary: 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-200 focus:ring-2 focus:ring-gray-400',
-    danger: 'border border-red-600 text-red-600 bg-transparent hover:bg-red-50 focus:ring-2 focus:ring-red-500',
+    primary: 'bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-600 hover:text-white hover:border-blue-600 active:bg-blue-700 active:text-white active:border-blue-700 focus:ring-2 focus:ring-blue-500',
+    secondary: 'bg-gray-100 text-gray-700 hover:bg-gray-200 active:bg-gray-300 border border-gray-200 focus:ring-2 focus:ring-gray-400',
+    danger: 'bg-red-50 text-red-700 border border-red-200 hover:bg-red-600 hover:text-white hover:border-red-600 active:bg-red-700 active:text-white active:border-red-700 focus:ring-2 focus:ring-red-500',
   };
 
   return (

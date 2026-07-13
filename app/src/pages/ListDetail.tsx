@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { listsAPI, itemsAPI, categoriesAPI } from '../services/api';
 import type { ShoppingListResponse, ItemResponse, CategoryResponse, ListItemResponse } from '../types';
 import Button from '../components/ui/Button';
+import HeroIcon from '../components/ui/HeroIcon';
 
 export default function ListDetail() {
   const { id } = useParams<{ id: string }>();
@@ -168,14 +169,14 @@ export default function ListDetail() {
             <>
               <button
                 onClick={() => setShowAdd(!showAdd)}
-                className="border border-blue-600 text-blue-600 bg-transparent hover:bg-blue-50 px-3 py-1.5 rounded text-sm font-medium transition"
+                className="bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-600 hover:text-white hover:border-blue-600 active:bg-blue-700 active:text-white active:border-blue-700 px-3 py-1.5 rounded text-sm font-medium transition"
               >
                 + Item
               </button>
               <button
                 onClick={handleAddAll}
                 disabled={addingAll}
-                className="border border-blue-600 text-blue-600 bg-transparent hover:bg-blue-50 px-3 py-1.5 rounded text-sm font-medium transition disabled:opacity-50"
+                className="bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-600 hover:text-white hover:border-blue-600 active:bg-blue-700 active:text-white active:border-blue-700 px-3 py-1.5 rounded text-sm font-medium transition disabled:opacity-50"
               >
                 {addingAll ? '...' : '+ Todos'}
               </button>
@@ -183,7 +184,7 @@ export default function ListDetail() {
           )}
           <button
             onClick={() => navigate('/lists')}
-            className="text-sm text-gray-500 hover:underline"
+            className="bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-600 hover:text-white hover:border-blue-600 active:bg-blue-700 active:text-white active:border-blue-700 px-3 py-1.5 rounded text-sm font-medium transition disabled:opacity-50"
           >
             Voltar
           </button>
@@ -192,10 +193,14 @@ export default function ListDetail() {
 
       {/* Search */}
       <div className="relative">
+        <HeroIcon
+          name="magnifying-glass"
+          className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-gray-400 pointer-events-none"
+        />
         <input
           type="text"
-          placeholder="🔍 Buscar item na lista..."
-          className="w-full border rounded-xl px-4 py-2.5 text-sm bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          placeholder="Buscar item na lista..."
+          className="w-full border rounded-xl pl-9 pr-4 py-2.5 text-sm bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -204,7 +209,7 @@ export default function ListDetail() {
             onClick={() => setSearchTerm('')}
             className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
           >
-            ✕
+            <HeroIcon name="x-mark" className="size-4" />
           </button>
         )}
       </div>
@@ -352,7 +357,7 @@ export default function ListDetail() {
                       <div className="relative">
                         <button
                           type="button"
-                          className="border rounded px-1.5 py-0.5 text-sm min-w-[3rem] bg-white hover:bg-gray-50"
+                          className="border border-gray-200 rounded px-1.5 py-0.5 text-sm min-w-[3rem] bg-white hover:bg-gray-100 active:bg-gray-200 transition"
                           onClick={() => setUnitOpen(unitOpen === item.id ? null : item.id)}
                           onBlur={() => setUnitOpen(null)}
                         >
@@ -411,12 +416,10 @@ export default function ListDetail() {
                 {isEditable && (
                   <button
                     onClick={() => handleRemove(item.id)}
-                    className="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition"
+                    className="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 active:bg-red-100 rounded-lg transition"
                     title="Remover da lista"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                    </svg>
+                    <HeroIcon name="trash" className="size-4" />
                   </button>
                 )}
               </div>
@@ -434,20 +437,16 @@ export default function ListDetail() {
               {allCatKeys.length > 1 && (
                 <button
                   onClick={() => setExpanded(allExpanded ? new Set() : new Set(allCatKeys))}
-                  className="text-xs px-3 py-1 rounded-full border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 transition"
+                  className="text-xs px-3 py-1 rounded-full border border-gray-200 bg-white text-gray-500 hover:bg-gray-100 active:bg-gray-200 transition"
                 >
                   {allExpanded ? (
                     <span className="inline-flex items-center gap-1">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5" />
-                      </svg>
+                      <HeroIcon name="chevron-up" className="size-4" />
                       Recolher tudo
                     </span>
                   ) : (
                     <span className="inline-flex items-center gap-1">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
-                      </svg>
+                      <HeroIcon name="chevron-down" className="size-4" />
                       Expandir tudo
                     </span>
                   )}
@@ -470,16 +469,10 @@ export default function ListDetail() {
                       }}
                     >
                       <div className="flex items-center gap-2">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className={`h-3 w-3 text-gray-400 transition-transform ${isExpanded ? 'rotate-90' : ''}`}
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          strokeWidth={2}
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                        </svg>
+                        <HeroIcon
+                          name="chevron-right"
+                          className={`size-3 text-gray-400 transition-transform ${isExpanded ? 'rotate-90' : ''}`}
+                        />
                         <h3 className="text-sm font-bold text-gray-600 uppercase tracking-wider">
                           {catName}
                         </h3>
@@ -513,16 +506,10 @@ export default function ListDetail() {
                           }}
                         >
                           <div className="flex items-center gap-2">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              className={`h-3 w-3 text-gray-400 transition-transform ${isExpanded ? 'rotate-90' : ''}`}
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                              strokeWidth={2}
-                            >
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                            </svg>
+                            <HeroIcon
+                              name="chevron-right"
+                              className={`size-3 text-gray-400 transition-transform ${isExpanded ? 'rotate-90' : ''}`}
+                            />
                             <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider">
                               Sem categoria
                             </h3>

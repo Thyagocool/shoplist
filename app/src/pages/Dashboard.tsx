@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import { itemsAPI, storesAPI, listsAPI } from '../services/api';
+import HeroIcon from '../components/ui/HeroIcon';
 import type { ShoppingListResponse } from '../types';
 
 export default function Dashboard() {
@@ -109,17 +110,17 @@ export default function Dashboard() {
       <div className="grid grid-cols-2 gap-4">
         <Link
           to="/lists/new"
-          className="border border-blue-600 text-blue-600 bg-transparent hover:bg-blue-50 rounded-xl p-4 text-center transition shadow-sm"
+          className="bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-600 hover:text-white hover:border-blue-600 active:bg-blue-700 active:text-white active:border-blue-700 rounded-xl p-4 text-center transition shadow-sm"
         >
-          <p className="text-lg font-bold">+</p>
-          <p className="text-sm">Nova Lista</p>
+          <HeroIcon name="plus" className="size-6 mx-auto" />
+          <p className="text-sm mt-1">Nova Lista</p>
         </Link>
         <Link
           to="/items"
-          className="border border-blue-600 text-blue-600 bg-transparent hover:bg-blue-50 rounded-xl p-4 text-center transition shadow-sm"
+          className="bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-600 hover:text-white hover:border-blue-600 active:bg-blue-700 active:text-white active:border-blue-700 rounded-xl p-4 text-center transition shadow-sm"
         >
-          <p className="text-lg font-bold">📦</p>
-          <p className="text-sm">Catálogo</p>
+          <HeroIcon name="cube" className="size-6 mx-auto" />
+          <p className="text-sm mt-1">Catálogo</p>
         </Link>
       </div>
     </div>

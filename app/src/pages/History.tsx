@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { listsAPI } from '../services/api';
+import HeroIcon from '../components/ui/HeroIcon';
 import type { ShoppingListResponse } from '../types';
 
 export default function History() {
@@ -29,7 +30,10 @@ export default function History() {
   return (
     <div className="space-y-4">
       <div>
-        <h2 className="text-xl font-bold text-gray-800">Histórico de Compras 📜</h2>
+        <div className="flex items-center gap-2">
+          <HeroIcon name="clock" className="size-6 text-gray-800" />
+          <h2 className="text-xl font-bold text-gray-800">Histórico de Compras</h2>
+        </div>
         <p className="text-sm text-gray-500">Compras finalizadas</p>
       </div>
 

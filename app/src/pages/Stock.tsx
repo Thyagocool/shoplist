@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { itemsAPI } from '../services/api';
+import HeroIcon from '../components/ui/HeroIcon';
 import type { ItemResponse } from '../types';
 
 // Stock info is embedded in the item via min_stock/max_stock
@@ -31,15 +32,19 @@ export default function Stock() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-bold text-gray-800">Estoque 📦</h2>
+        <div className="flex items-center gap-2">
+          <HeroIcon name="archive-box" className="size-6 text-gray-800" />
+          <h2 className="text-xl font-bold text-gray-800">Estoque</h2>
+        </div>
         <p className="text-sm text-gray-500">Níveis de estoque configurados</p>
       </div>
 
       {/* Alerts */}
       {belowMin.length > 0 && (
         <section>
-          <h3 className="text-sm font-semibold text-red-600 uppercase mb-2">
-            ⚠️ Itens com Estoque Mínimo ({belowMin.length})
+          <h3 className="text-sm font-semibold text-red-600 uppercase mb-2 flex items-center gap-1">
+            <HeroIcon name="exclamation-triangle" className="size-4" />
+            Itens com Estoque Mínimo ({belowMin.length})
           </h3>
           <div className="space-y-2">
             {belowMin.map((item) => (

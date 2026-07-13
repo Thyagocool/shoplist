@@ -43,7 +43,7 @@ export default function Lists() {
         <h2 className="text-xl font-bold text-gray-800">Listas de Compras</h2>
         <button
           onClick={() => navigate('/lists/new')}
-          className="border border-blue-600 text-blue-600 bg-transparent hover:bg-blue-50 px-4 py-2 rounded-lg text-sm font-medium transition"
+          className="bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-600 hover:text-white hover:border-blue-600 active:bg-blue-700 active:text-white active:border-blue-700 px-4 py-2 rounded-lg text-sm font-medium transition"
         >
           + Nova Lista
         </button>
@@ -89,13 +89,13 @@ export default function Lists() {
                     <div className="flex gap-2 mt-2">
                       <button
                         onClick={() => handleComplete(list.id)}
-                        className="text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded"
+                        className="border border-blue-200 text-blue-600 bg-blue-50 hover:bg-blue-600 hover:text-white hover:border-blue-600 active:bg-blue-700 active:text-white px-2 py-1 rounded text-xs font-medium transition"
                       >
                         Finalizar
                       </button>
                       <button
                         onClick={() => handleCancel(list.id)}
-                        className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded"
+                        className="border border-red-200 text-red-600 bg-red-50 hover:bg-red-600 hover:text-white hover:border-red-600 active:bg-red-700 active:text-white px-2 py-1 rounded text-xs font-medium transition"
                       >
                         Cancelar
                       </button>

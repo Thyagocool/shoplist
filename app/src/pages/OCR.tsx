@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { ocrAPI } from '../services/api';
 import Button from '../components/ui/Button';
+import HeroIcon from '../components/ui/HeroIcon';
 
 interface OCRLine {
   text: string;
@@ -48,7 +49,10 @@ export default function OCR() {
   return (
     <div className="space-y-4">
       <div>
-        <h2 className="text-xl font-bold text-gray-800">Câmera / OCR 📸</h2>
+        <div className="flex items-center gap-2">
+          <HeroIcon name="camera" className="size-6 text-gray-800" />
+          <h2 className="text-xl font-bold text-gray-800">Câmera / OCR</h2>
+        </div>
         <p className="text-sm text-gray-500">
           Tire uma foto de um comprovante ou nota fiscal para extrair os itens
         </p>
@@ -77,17 +81,26 @@ export default function OCR() {
           variant="secondary"
           onClick={() => fileRef.current?.click()}
         >
-          📁 Galeria
+          <span className="flex items-center gap-1.5">
+            <HeroIcon name="folder" className="size-4" />
+            Galeria
+          </span>
         </Button>
         <Button
           variant="secondary"
           onClick={handleCamera}
         >
-          📷 Câmera
+          <span className="flex items-center gap-1.5">
+            <HeroIcon name="camera" className="size-4" />
+            Câmera
+          </span>
         </Button>
         {file && (
           <Button onClick={handleOCR} isLoading={loading}>
-            🔍 Extrair Texto
+            <span className="flex items-center gap-1.5">
+              <HeroIcon name="magnifying-glass" className="size-4" />
+              Extrair Texto
+            </span>
           </Button>
         )}
       </div>
