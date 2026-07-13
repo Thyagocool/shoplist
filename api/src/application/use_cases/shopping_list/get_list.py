@@ -43,6 +43,8 @@ class GetShoppingListUseCase:
             id=model.id,
             name=model.name,
             status=model.status,
+            store_id=model.store_id,
+            store_name=model.store.name if model.store else None,
             completed_at=model.completed_at,
             items=items,
         )

@@ -56,6 +56,8 @@ async def create_list(
         id=result.id,
         name=result.name,
         status=result.status,
+        store_id=result.store_id,
+        store_name=result.store_name,
         completed_at=result.completed_at,
     )
 
@@ -123,6 +125,8 @@ async def list_lists(
             id=l.id,
             name=l.name,
             status=l.status,
+            store_id=l.store_id,
+            store_name=l.store_name,
             completed_at=l.completed_at,
             items=[
                 ListItemResponse(
@@ -161,6 +165,8 @@ async def get_list(
         id=result.id,
         name=result.name,
         status=result.status,
+        store_id=result.store_id,
+        store_name=result.store_name,
         completed_at=result.completed_at,
         items=[
             ListItemResponse(
@@ -330,6 +336,8 @@ async def complete_list(
         id=result.id,
         name=result.name,
         status=result.status,
+        store_id=result.store_id,
+        store_name=result.store_name,
         completed_at=result.completed_at,
     )
 
@@ -354,5 +362,7 @@ async def cancel_list(
         id=result.id,
         name=result.name,
         status=result.status,
+        store_id=result.store_id,
+        store_name=result.store_name,
         completed_at=result.completed_at,
     )

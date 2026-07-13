@@ -13,9 +13,11 @@ class ShoppingListModel(UUIDMixin, TimestampMixin, Base):
     name: Mapped[str] = mapped_column(String(120), nullable=False)
     status: Mapped[str] = mapped_column(String(20), nullable=False, default="pending")
     user_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
+    store_id: Mapped[UUID | None] = mapped_column(UUID(as_uuid=True), ForeignKey("stores.id"), nullable=True)
     completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
     # Relationships
     user = relationship("UserModel", back_populates="shopping_lists")
+    store = relationship("StoreModel", lazy="selectin")
     items = relationship("ShoppingListItemModel", back_populates="shopping_list", lazy="selectin", cascade="all, delete-orphan")
     inventory_declarations = relationship("InventoryModel", back_populates="shopping_list", lazy="selectin")

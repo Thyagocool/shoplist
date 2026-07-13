@@ -12,7 +12,7 @@ from src.infrastructure.database.unit_of_work import SQLAlchemyUnitOfWork
 from src.presentation.api.middleware.auth_middleware import get_current_user_id
 from src.presentation.schemas.inventory_schemas import (
     DeclareInventoryRequest,
-    InventoryResponse,
+    InventoryResponseOld as InventoryResponse,
 )
 
 router = APIRouter(prefix="/api/v1/inventory", tags=["inventory"])

@@ -12,6 +12,8 @@ from src.infrastructure.database.models.list_item_model import ShoppingListItemM
 from src.infrastructure.database.models.movement_model import MovementModel
 from src.infrastructure.database.models.stock_model import StockModel
 from src.infrastructure.database.models.inventory_model import InventoryModel
+from src.infrastructure.database.models.inventory_header_model import InventoryHeaderModel
+from src.infrastructure.database.models.inventory_item_model import InventoryItemModel
 
 __all__ = [
     "Base",
@@ -24,4 +26,6 @@ __all__ = [
     "MovementModel",
     "StockModel",
     "InventoryModel",
+    "InventoryHeaderModel",
+    "InventoryItemModel",
 ]

@@ -71,6 +71,11 @@ export default function Lists() {
                     >
                       {list.name}
                     </Link>
+                    {list.store_name && (
+                      <p className="text-xs text-gray-400 mt-0.5">
+                        🏪 {list.store_name}
+                      </p>
+                    )}
                     <p className="text-xs text-gray-400 mt-1">
                       {list.items?.length || 0} itens ·{' '}
                       {list.items?.filter((i) => i.checked).length || 0} marcados
@@ -126,6 +131,9 @@ export default function Lists() {
                         {list.status === 'completed' ? 'OK' : 'Cancelado'}
                       </span>
                     </div>
+                    {list.store_name && (
+                      <p className="text-xs text-gray-400 mt-0.5">🏪 {list.store_name}</p>
+                    )}
                     {list.completed_at && (
                       <p className="text-xs text-gray-400 mt-1">
                         {new Date(list.completed_at).toLocaleDateString('pt-BR')}

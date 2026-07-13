@@ -129,7 +129,33 @@ export const storesAPI = {
   delete: (id: string) => api.delete(`/stores/${id}`),
 };
 
-// --- Inventory ---
+// --- Stock ---
+export const stockAPI = {
+  list: () => api.get('/stock'),
+  update: (itemId: string, current_quantity: number) =>
+    api.put(`/stock/${itemId}`, { pre_registered_item_id: itemId, current_quantity }),
+  batchUpdate: (items: Array<{ pre_registered_item_id: string; current_quantity: number }>) =>
+    api.put('/stock', { items }),
+};
+
+// --- New Inventories (standalone) ---
+export const inventoriesAPI = {
+  list: () => api.get('/inventories'),
+  create: (data: {
+    date?: string;
+    notes?: string | null;
+    items?: Array<{ pre_registered_item_id: string; declared_quantity: number }>;
+  }) => api.post('/inventories', data),
+  get: (id: string) => api.get(`/inventories/${id}`),
+  updateItems: (id: string, items: Array<{ pre_registered_item_id: string; declared_quantity: number }>) =>
+    api.put(`/inventories/${id}/items`, { items }),
+  removeItem: (inventoryId: string, itemId: string) =>
+    api.delete(`/inventories/${inventoryId}/items/${itemId}`),
+  complete: (id: string) => api.post(`/inventories/${id}/complete`),
+  cancel: (id: string) => api.post(`/inventories/${id}/cancel`),
+};
+
+// --- Old Inventory (tied to shopping lists, kept for compat) ---
 export const inventoryAPI = {
   list: (listId: string) => api.get('/inventory', { params: { list_id: listId } }),
   declare: (data: {

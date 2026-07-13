@@ -1,28 +1,48 @@
 import { useEffect, useMemo, useState } from 'react';
-import { itemsAPI } from '../services/api';
+import { itemsAPI, stockAPI } from '../services/api';
 import HeroIcon from '../components/ui/HeroIcon';
-import type { ItemResponse } from '../types';
+import type { ItemResponse, StockItemResponse } from '../types';
+
+interface ItemWithStock extends ItemResponse {
+  current_quantity: number;
+}
 
 interface CategoryGroup {
   id: string;
   name: string;
-  items: ItemResponse[];
+  items: ItemWithStock[];
   totalMin: number;
   totalMax: number;
   pct: number; // 0–100
 }
 
 export default function Stock() {
-  const [items, setItems] = useState<ItemResponse[]>([]);
+  const [items, setItems] = useState<ItemWithStock[]>([]);
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const [alertsOpen, setAlertsOpen] = useState(true);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await itemsAPI.list();
-        setItems(data);
+        const [catRes, stockRes] = await Promise.all([
+          itemsAPI.list(),
+          stockAPI.list().catch(() => ({ data: [] })),
+        ]);
+        const catalogItems: ItemResponse[] = catRes.data;
+        const stockItems: StockItemResponse[] = stockRes.data || [];
+
+        // Merge current_quantity from stock into catalog items
+        const stockMap = new Map<string, number>();
+        stockItems.forEach((s) => stockMap.set(s.pre_registered_item_id, s.current_quantity));
+
+        const merged: ItemWithStock[] = catalogItems.map((item) => ({
+          ...item,
+          current_quantity: stockMap.get(item.id) ?? 0,
+        }));
+
+        setItems(merged);
       } catch {
         // silent
       } finally {
@@ -31,9 +51,15 @@ export default function Stock() {
     })();
   }, []);
 
+  const filteredItems = useMemo(() => {
+    if (!search.trim()) return items;
+    const q = search.toLowerCase();
+    return items.filter((i) => i.name.toLowerCase().includes(q));
+  }, [items, search]);
+
   const groups = useMemo<CategoryGroup[]>(() => {
-    const map = new Map<string, ItemResponse[]>();
-    for (const item of items) {
+    const map = new Map<string, ItemWithStock[]>();
+    for (const item of filteredItems) {
       const key = item.category_id || '__uncategorized__';
       if (!map.has(key)) map.set(key, []);
       map.get(key)!.push(item);
@@ -51,9 +77,9 @@ export default function Stock() {
         return { id, name, items: catItems, totalMin, totalMax, pct };
       })
       .sort((a, b) => b.pct - a.pct); // mais crítico primeiro
-  }, [items]);
+  }, [filteredItems]);
 
-  const belowMin = items.filter((i) => i.min_stock > 0);
+  const belowMin = filteredItems.filter((i) => i.min_stock > 0);
 
   if (loading) return <p className="text-gray-400">Carregando...</p>;
 
@@ -80,8 +106,20 @@ export default function Stock() {
           <h2 className="text-xl font-bold text-gray-800">Estoque</h2>
         </div>
         <p className="text-sm text-gray-500">
-          {items.length} itens em {groups.length} categorias
+          {filteredItems.length} itens em {groups.length} categorias
         </p>
+      </div>
+
+      {/* Search */}
+      <div className="relative">
+        <HeroIcon name="magnifying-glass" className="size-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+        <input
+          type="text"
+          placeholder="Buscar item por nome..."
+          className="w-full border rounded-lg pl-9 pr-4 py-2 text-sm"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
       </div>
 
       {/* Alerts — itens abaixo do mínimo */}
@@ -123,7 +161,9 @@ export default function Stock() {
 
       {/* Categorias */}
       {groups.length === 0 ? (
-        <p className="text-gray-400 text-sm">Nenhum item cadastrado</p>
+        <p className="text-gray-400 text-sm text-center py-8">
+          {search ? `Nenhum item encontrado para "${search}"` : 'Nenhum item cadastrado'}
+        </p>
       ) : (
         <div className="space-y-4">
           {/* Expandir / Recolher tudo */}
@@ -210,19 +250,24 @@ export default function Stock() {
                             <p className="text-sm font-medium text-gray-800 truncate">
                               {item.name}
                             </p>
-                            {hasItemStock && (
-                              <div className="flex items-center gap-2 mt-1">
-                                <div className="flex-1 max-w-[120px] bg-gray-100 rounded-full h-1.5">
-                                  <div
-                                    className={`h-1.5 rounded-full ${pctColor(itemPct)}`}
-                                    style={{ width: `${Math.min(100, itemPct)}%` }}
-                                  />
-                                </div>
-                                <span className="text-xs text-gray-400">
-                                  {item.min_stock}–{item.max_stock} {item.default_unit}
-                                </span>
-                              </div>
-                            )}
+                            <div className="flex items-center gap-3 mt-1">
+                              <span className="text-sm font-semibold text-gray-700">
+                                {item.current_quantity} {item.default_unit}
+                              </span>
+                              {hasItemStock && (
+                                <>
+                                  <div className="flex-1 max-w-[100px] bg-gray-100 rounded-full h-1.5">
+                                    <div
+                                      className={`h-1.5 rounded-full ${pctColor(itemPct)}`}
+                                      style={{ width: `${Math.min(100, itemPct)}%` }}
+                                    />
+                                  </div>
+                                  <span className="text-xs text-gray-400">
+                                    {item.min_stock}–{item.max_stock}
+                                  </span>
+                                </>
+                              )}
+                            </div>
                             {!hasItemStock && (
                               <p className="text-xs text-gray-400">Sem estoque configurado</p>
                             )}

@@ -15,6 +15,8 @@ class ListShoppingListsUseCase:
                 id=m.id,
                 name=m.name,
                 status=m.status,
+                store_id=m.store_id,
+                store_name=m.store.name if m.store else None,
                 completed_at=m.completed_at,
                 items=[
                     ListItemOutput(

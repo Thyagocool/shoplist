@@ -158,6 +158,9 @@ export default function ListDetail() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-xl font-bold text-gray-800">{list.name}</h2>
+          {list.store_name && (
+            <p className="text-xs text-gray-400">🏪 {list.store_name}</p>
+          )}
           <p className="text-sm text-gray-500">
             Status: <span className="font-medium">{list.status === 'in_progress' ? 'Em andamento' : list.status}</span>
             {' · '}

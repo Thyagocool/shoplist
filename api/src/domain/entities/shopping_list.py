@@ -17,6 +17,7 @@ class ShoppingList:
     name: str = ""
     status: ShoppingListStatus = ShoppingListStatus.PENDING
     user_id: UUID | None = None
+    store_id: UUID | None = None
     created_at: datetime = field(default_factory=datetime.now)
     completed_at: datetime | None = None
 
@@ -27,6 +28,7 @@ class ShoppingList:
             name=name,
             status=ShoppingListStatus.IN_PROGRESS,
             user_id=user_id,
+            store_id=store_id,
             created_at=datetime.now(),
         )
 

@@ -17,8 +17,9 @@ class ShoppingListRepository(BaseRepository[ShoppingListModel]):
             select(ShoppingListModel)
             .where(ShoppingListModel.user_id == user_id)
             .order_by(ShoppingListModel.created_at.desc())
+            .options(joinedload(ShoppingListModel.store))
         )
-        return list(result.scalars().all())
+        return list(result.scalars().unique().all())
 
     async def find_with_items(self, list_id: UUID) -> ShoppingListModel | None:
         result = await self.session.execute(
@@ -27,6 +28,7 @@ class ShoppingListRepository(BaseRepository[ShoppingListModel]):
             .options(
                 joinedload(ShoppingListModel.items),
                 joinedload(ShoppingListModel.inventory_declarations),
+                joinedload(ShoppingListModel.store),
             )
         )
         return result.unique().scalar_one_or_none()

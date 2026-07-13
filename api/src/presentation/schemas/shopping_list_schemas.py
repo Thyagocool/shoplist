@@ -41,6 +41,8 @@ class ShoppingListResponse(BaseModel):
     id: UUID
     name: str
     status: str
+    store_id: UUID | None = None
+    store_name: str | None = None
     completed_at: datetime | None = None
     items: list[ListItemResponse] = []
 

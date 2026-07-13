@@ -14,6 +14,8 @@ from src.presentation.api.routers.store_router import router as store_router
 from src.presentation.api.routers.inventory_router import router as inventory_router
 from src.presentation.api.routers.ocr_router import router as ocr_router
 from src.presentation.api.routers.shopping_list_router import router as shopping_list_router
+from src.presentation.api.routers.inventories_router import router as inventories_router
+from src.presentation.api.routers.stock_router import router as stock_router
 
 
 @asynccontextmanager
@@ -63,6 +65,8 @@ def create_app() -> FastAPI:
     app.include_router(inventory_router)
     app.include_router(ocr_router)
     app.include_router(shopping_list_router)
+    app.include_router(inventories_router)
+    app.include_router(stock_router)
 
     return app
 

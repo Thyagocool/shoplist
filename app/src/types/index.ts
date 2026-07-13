@@ -51,7 +51,53 @@ export interface StoreResponse {
   name: string;
 }
 
-// Inventory
+// Stock
+export interface StockItemResponse {
+  pre_registered_item_id: string;
+  item_name: string;
+  category_name: string;
+  current_quantity: number;
+  default_unit: string;
+  min_stock: number;
+  max_stock: number;
+}
+
+// --- New Inventory feature ---
+export interface InventoryItemInput {
+  pre_registered_item_id: string;
+  declared_quantity: number;
+}
+
+export interface InventoryItemResponse {
+  id: string;
+  pre_registered_item_id: string;
+  item_name: string;
+  category_name: string;
+  declared_quantity: number;
+  previous_quantity: number;
+  default_unit: string;
+}
+
+export interface InventorySummaryResponse {
+  id: string;
+  date: string;
+  status: string;
+  notes: string | null;
+  item_count: number;
+  created_at: string;
+}
+
+export interface InventoryDetailResponse {
+  id: string;
+  date: string;
+  status: string;
+  notes: string | null;
+  items: InventoryItemResponse[];
+  created_at: string;
+  updated_at: string;
+}
+
+// Old Inventory (tied to shopping lists)
 export interface InventoryResponse {
   id: string;
   shopping_list_id: string;
@@ -77,6 +123,8 @@ export interface ShoppingListResponse {
   id: string;
   name: string;
   status: string;
+  store_id: string | null;
+  store_name: string | null;
   completed_at: string | null;
   items: ListItemResponse[];
 }
